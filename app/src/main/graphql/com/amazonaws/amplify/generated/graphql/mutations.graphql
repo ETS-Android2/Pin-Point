@@ -1,72 +1,456 @@
 # this is an auto generated file. This will be overwritten
-mutation CreateTask(
-  $input: CreateTaskInput!
-  $condition: ModelTaskConditionInput
+mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  createTask(input: $input, condition: $condition) {
+  createUser(input: $input, condition: $condition) {
     id
+    userName
+    firstName
+    lastName
+    bio
+    email
+    img
+    following {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    followers {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    Pins {
+      items {
+        id
+        userID
+        title
+        body
+        isPrivate
+        pinImg
+        lat
+        lon
+        locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    userName
+    firstName
+    lastName
+    bio
+    email
+    img
+    following {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    followers {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    Pins {
+      items {
+        id
+        userID
+        title
+        body
+        isPrivate
+        pinImg
+        lat
+        lon
+        locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    userName
+    firstName
+    lastName
+    bio
+    email
+    img
+    following {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    followers {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    Pins {
+      items {
+        id
+        userID
+        title
+        body
+        isPrivate
+        pinImg
+        lat
+        lon
+        locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreatePin(
+  $input: CreatePinInput!
+  $condition: ModelPinConditionInput
+) {
+  createPin(input: $input, condition: $condition) {
+    id
+    userID
     title
-    description
-    status
+    body
+    isPrivate
+    pinImg
+    lat
+    lon
+    locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
 }
-mutation UpdateTask(
-  $input: UpdateTaskInput!
-  $condition: ModelTaskConditionInput
+mutation UpdatePin(
+  $input: UpdatePinInput!
+  $condition: ModelPinConditionInput
 ) {
-  updateTask(input: $input, condition: $condition) {
+  updatePin(input: $input, condition: $condition) {
     id
+    userID
     title
-    description
-    status
+    body
+    isPrivate
+    pinImg
+    lat
+    lon
+    locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
 }
-mutation DeleteTask(
-  $input: DeleteTaskInput!
-  $condition: ModelTaskConditionInput
+mutation DeletePin(
+  $input: DeletePinInput!
+  $condition: ModelPinConditionInput
 ) {
-  deleteTask(input: $input, condition: $condition) {
+  deletePin(input: $input, condition: $condition) {
     id
+    userID
     title
-    description
-    status
-    createdAt
-    updatedAt
-  }
-}
-mutation CreateNote(
-  $input: CreateNoteInput!
-  $condition: ModelNoteConditionInput
-) {
-  createNote(input: $input, condition: $condition) {
-    id
-    content
-    createdAt
-    updatedAt
-  }
-}
-mutation UpdateNote(
-  $input: UpdateNoteInput!
-  $condition: ModelNoteConditionInput
-) {
-  updateNote(input: $input, condition: $condition) {
-    id
-    content
-    createdAt
-    updatedAt
-  }
-}
-mutation DeleteNote(
-  $input: DeleteNoteInput!
-  $condition: ModelNoteConditionInput
-) {
-  deleteNote(input: $input, condition: $condition) {
-    id
-    content
+    body
+    isPrivate
+    pinImg
+    lat
+    lon
+    locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }

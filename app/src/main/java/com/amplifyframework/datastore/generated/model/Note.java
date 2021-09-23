@@ -22,9 +22,11 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class Note implements Model {
   public static final QueryField ID = field("Note", "id");
   public static final QueryField TEST = field("Note", "test");
+  public static final QueryField TEST2 = field("Note", "test2");
   public static final QueryField CONTENT = field("Note", "content");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String test;
+  private final @ModelField(targetType="String") String test2;
   private final @ModelField(targetType="String", isRequired = true) String content;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
@@ -34,6 +36,10 @@ public final class Note implements Model {
   
   public String getTest() {
       return test;
+  }
+  
+  public String getTest2() {
+      return test2;
   }
   
   public String getContent() {
@@ -48,9 +54,10 @@ public final class Note implements Model {
       return updatedAt;
   }
   
-  private Note(String id, String test, String content) {
+  private Note(String id, String test, String test2, String content) {
     this.id = id;
     this.test = test;
+    this.test2 = test2;
     this.content = content;
   }
   
@@ -64,6 +71,7 @@ public final class Note implements Model {
       Note note = (Note) obj;
       return ObjectsCompat.equals(getId(), note.getId()) &&
               ObjectsCompat.equals(getTest(), note.getTest()) &&
+              ObjectsCompat.equals(getTest2(), note.getTest2()) &&
               ObjectsCompat.equals(getContent(), note.getContent()) &&
               ObjectsCompat.equals(getCreatedAt(), note.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), note.getUpdatedAt());
@@ -75,6 +83,7 @@ public final class Note implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getTest())
+      .append(getTest2())
       .append(getContent())
       .append(getCreatedAt())
       .append(getUpdatedAt())
@@ -88,6 +97,7 @@ public final class Note implements Model {
       .append("Note {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("test=" + String.valueOf(getTest()) + ", ")
+      .append("test2=" + String.valueOf(getTest2()) + ", ")
       .append("content=" + String.valueOf(getContent()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
@@ -121,6 +131,7 @@ public final class Note implements Model {
     return new Note(
       id,
       null,
+      null,
       null
     );
   }
@@ -128,6 +139,7 @@ public final class Note implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       test,
+      test2,
       content);
   }
   public interface ContentStep {
@@ -139,6 +151,7 @@ public final class Note implements Model {
     Note build();
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep test(String test);
+    BuildStep test2(String test2);
   }
   
 
@@ -146,6 +159,7 @@ public final class Note implements Model {
     private String id;
     private String content;
     private String test;
+    private String test2;
     @Override
      public Note build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -153,6 +167,7 @@ public final class Note implements Model {
         return new Note(
           id,
           test,
+          test2,
           content);
     }
     
@@ -169,22 +184,40 @@ public final class Note implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep test2(String test2) {
+        this.test2 = test2;
+        return this;
+    }
+    
     /** 
+     * WARNING: Do not set ID when creating a new object. Leave this blank and one will be auto generated for you.
+     * This should only be set when referring to an already existing object.
      * @param id id
      * @return Current Builder instance, for fluent method chaining
+     * @throws IllegalArgumentException Checks that ID is in the proper format
      */
-    public BuildStep id(String id) {
+    public BuildStep id(String id) throws IllegalArgumentException {
         this.id = id;
+        
+        try {
+            UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
+        } catch (Exception exception) {
+          throw new IllegalArgumentException("Model IDs must be unique in the format of UUID.",
+                    exception);
+        }
+        
         return this;
     }
   }
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String test, String content) {
+    private CopyOfBuilder(String id, String test, String test2, String content) {
       super.id(id);
       super.content(content)
-        .test(test);
+        .test(test)
+        .test2(test2);
     }
     
     @Override
@@ -195,6 +228,11 @@ public final class Note implements Model {
     @Override
      public CopyOfBuilder test(String test) {
       return (CopyOfBuilder) super.test(test);
+    }
+    
+    @Override
+     public CopyOfBuilder test2(String test2) {
+      return (CopyOfBuilder) super.test2(test2);
     }
   }
   

@@ -1,11 +1,30 @@
-type Task @model {
-  id: ID!
-  title: String!
-  description: String
-  status: String
+type User @model {
+    id: ID!
+    userName: String
+    firstName: String
+    lastName: String
+    bio: String
+    email: String
+    img: String
+    following: [User]
+    followers: [User]
+    Pins:[Pin] @connection(keyName: "byUser", fields: ["id"])
 }
-type Note @model {
-  id: ID!
-  test:String
-  content: String!
+
+type Pin @model
+@key(name: "byUser", fields: ["userID","locatName"]) {
+    id: ID!
+    userID: ID!
+    title: String!
+    body: String
+    isPrivate:Boolean
+    pinImg: String
+    lat:Float
+    lon:Float
+    locatName:String
 }
+
+#
+#input Pin {
+#    isPrivate: Boolean = false
+#}
