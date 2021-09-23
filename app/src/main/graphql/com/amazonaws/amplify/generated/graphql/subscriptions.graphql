@@ -1,54 +1,438 @@
 # this is an auto generated file. This will be overwritten
-subscription OnCreateTask {
-  onCreateTask {
+subscription OnCreateUser {
+  onCreateUser {
     id
+    userName
+    firstName
+    lastName
+    bio
+    email
+    img
+    following {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    followers {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    Pins {
+      items {
+        id
+        userID
+        title
+        body
+        isPrivate
+        pinImg
+        lat
+        lon
+        locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateUser {
+  onUpdateUser {
+    id
+    userName
+    firstName
+    lastName
+    bio
+    email
+    img
+    following {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    followers {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    Pins {
+      items {
+        id
+        userID
+        title
+        body
+        isPrivate
+        pinImg
+        lat
+        lon
+        locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteUser {
+  onDeleteUser {
+    id
+    userName
+    firstName
+    lastName
+    bio
+    email
+    img
+    following {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    followers {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      following {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      followers {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    Pins {
+      items {
+        id
+        userID
+        title
+        body
+        isPrivate
+        pinImg
+        lat
+        lon
+        locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreatePin {
+  onCreatePin {
+    id
+    userID
     title
-    description
-    status
+    body
+    isPrivate
+    pinImg
+    lat
+    lon
+    locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
 }
-subscription OnUpdateTask {
-  onUpdateTask {
+subscription OnUpdatePin {
+  onUpdatePin {
     id
+    userID
     title
-    description
-    status
+    body
+    isPrivate
+    pinImg
+    lat
+    lon
+    locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
 }
-subscription OnDeleteTask {
-  onDeleteTask {
+subscription OnDeletePin {
+  onDeletePin {
     id
+    userID
     title
-    description
-    status
-    createdAt
-    updatedAt
-  }
-}
-subscription OnCreateNote {
-  onCreateNote {
-    id
-    content
-    createdAt
-    updatedAt
-  }
-}
-subscription OnUpdateNote {
-  onUpdateNote {
-    id
-    content
-    createdAt
-    updatedAt
-  }
-}
-subscription OnDeleteNote {
-  onDeleteNote {
-    id
-    content
+    body
+    isPrivate
+    pinImg
+    lat
+    lon
+    locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
