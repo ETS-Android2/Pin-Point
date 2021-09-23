@@ -6,5 +6,6 @@ type Task @model {
 }
 type Note @model {
   id: ID!
+  test:String
   content: String!
 }
