@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+        <activity android:name=".Following"></activity>
+        <activity android:name=".Followers" />
         <activity
             android:name=".User_Page"
             android:exported="true" />
