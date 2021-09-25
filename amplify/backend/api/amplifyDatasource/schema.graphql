@@ -6,8 +6,8 @@ type User @model {
     bio: String
     email: String
     img: String
-    following: [User]
-    followers: [User]
+    following: [User] @connection
+    followers: [User] @connection
     Pins:[Pin] @connection(keyName: "byUser", fields: ["id"])
 }
 

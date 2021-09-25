@@ -12,14 +12,7 @@ mutation CreateUser(
     email
     img
     following {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -33,39 +26,11 @@ mutation CreateUser(
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     followers {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -79,29 +44,8 @@ mutation CreateUser(
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     Pins {
       items {
@@ -143,14 +87,7 @@ mutation UpdateUser(
     email
     img
     following {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -164,39 +101,11 @@ mutation UpdateUser(
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     followers {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -210,29 +119,8 @@ mutation UpdateUser(
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     Pins {
       items {
@@ -274,14 +162,7 @@ mutation DeleteUser(
     email
     img
     following {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -295,39 +176,11 @@ mutation DeleteUser(
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     followers {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -341,29 +194,8 @@ mutation DeleteUser(
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     Pins {
       items {

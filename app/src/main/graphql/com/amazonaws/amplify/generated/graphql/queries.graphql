@@ -20,32 +20,12 @@ query SyncUsers(
       email
       img
       following {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       Pins {
         nextToken
@@ -71,14 +51,7 @@ query GetUser($id: ID!) {
     email
     img
     following {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -92,39 +65,11 @@ query GetUser($id: ID!) {
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     followers {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -138,29 +83,8 @@ query GetUser($id: ID!) {
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     Pins {
       items {
@@ -204,32 +128,12 @@ query ListUsers(
       email
       img
       following {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       Pins {
         nextToken
