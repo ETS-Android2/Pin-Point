@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login"
+    android:orientation="vertical"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
+
+    <ImageView
+        android:id="@+id/logo_img_ver"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:transitionName="logo_image"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/projectpic5" />
+
+    <TextView
+        android:id="@+id/logo_name_vervidication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verfication"
+        android:textSize="40sp"
+        android:transitionName="logo_text"
+        android:fontFamily="@font/anton"/>
+    <TextView
+        android:id="@+id/slogan_name_ver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter verification code here"
+        android:textSize="15dp"
+        android:fontFamily="@font/anton"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@android:color/background_dark"
+            android:id="@+id/verficationcode"
+            android:hint="Verfication Code"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_pending_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/vervicationTextInput"
+                android:layout_width="match_parent"
+                app:backgroundTint="@android:color/background_dark"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/verficationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm"
+            app:backgroundTint="#DA0037"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+</LinearLayout>
