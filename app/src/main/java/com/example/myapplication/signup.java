@@ -49,7 +49,7 @@ public class signup extends AppCompatActivity {
                     Log.i("signUp", "signUp successful: " + success.toString());
                     Intent goToVerification = new Intent(signup.this, Verfication.class);
                     goToVerification.putExtra("username", username);
-                    goToVerification.putExtra("password", password);
+//                    goToVerification.putExtra("password", password);
                     startActivity(goToVerification);
                 },
                 error -> {

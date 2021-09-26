@@ -23,7 +23,7 @@ public class Verfication extends AppCompatActivity {
         Intent intent=getIntent();
         username=intent.getExtras().getString("username","");
 //        username=intent.getExtras().getString("username");
-        password=intent.getExtras().getString("password","");
+//        password=intent.getExtras().getString("password","");
 
         verfiy.setOnClickListener(view -> verification(username,code.getText().toString()));
     }
