@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:padding="70dp"
-        android:background="#DA0037">
+        android:background="@drawable/background2">
+
         <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/usepage_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/usepage_image"
             android:layout_centerVertical="true"
             android:src="@drawable/photo_1529665253569_6d01c0eaf7b6"
             app:civ_border_color="@color/white"
@@ -31,20 +32,21 @@
             android:fontFamily="@font/baloo"
             android:includeFontPadding="false"
             android:text="user name"
-            android:textSize="25dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+
         <TextView
             android:id="@+id/user_name"
             android:layout_width="174dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/baloo"
-            android:text="user name"
-            android:textSize="16dp"
-            android:includeFontPadding="false"
-            android:layout_toRightOf="@+id/usepage_image"
             android:layout_below="@+id/full_name"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/white"/>
+            android:layout_toRightOf="@+id/usepage_image"
+            android:fontFamily="@font/baloo"
+            android:includeFontPadding="false"
+            android:text="user name"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
 
 
 
@@ -60,8 +62,8 @@
             android:layout_height="125dp"
             android:layout_weight="1"
             android:layout_margin="10dp"
-            android:background="#DA0037"
-            app:cardBackgroundColor="#DA0037"
+            android:background="#ff021f"
+            app:cardBackgroundColor="#ff021f"
             app:cardElevation="10dp">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -103,8 +105,8 @@
             android:layout_height="125dp"
             android:layout_weight="1"
             android:layout_margin="10dp"
-            android:background="#DA0037"
-            app:cardBackgroundColor="#DA0037"
+            android:background="#ff021f"
+            app:cardBackgroundColor="#ff021f"
             app:cardElevation="15dp">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -115,16 +117,17 @@
                     android:layout_height="30dp"
                     android:src="@drawable/untitled_1"
                     android:layout_centerHorizontal="true"/>
+
                 <TextView
                     android:id="@+id/followers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"
                     android:fontFamily="@font/baloo"
                     android:includeFontPadding="false"
-                    android:layout_centerInParent="true"/>
+                    android:text="20"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

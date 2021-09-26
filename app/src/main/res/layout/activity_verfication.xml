@@ -15,7 +15,7 @@
         android:layout_height="150dp"
         android:transitionName="logo_image"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/projectpic5" />
+        app:srcCompat="@drawable/finallogo" />
 
     <TextView
         android:id="@+id/logo_name_vervidication"
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Confirm"
-            app:backgroundTint="#DA0037"
+            app:backgroundTint="#ff021f"
             android:padding="15dp"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"/>

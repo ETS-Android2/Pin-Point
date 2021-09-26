@@ -5,85 +5,104 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Dashboard"
     android:fitsSystemWindows="true"
+    tools:context=".Dashboard"
     tools:openDrawer="start">
 
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/nav_veiw"
-        app:headerLayout="@layout/header"
-        app:menu="@menu/main_menu"
-        android:maxWidth="230dp"
-        android:layout_gravity="start"/>
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/nav_veiw"
+            app:headerLayout="@layout/header"
+            app:menu="@menu/main_menu"
+            android:maxWidth="230dp"
+            android:layout_gravity="start" />
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="wrap_content"
+    android:layout_height="200dp">
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-   >
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
-        android:layout_width="359dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/white"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/icon" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/home_Text"
-        android:layout_width="0dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/baloo"
-        android:text="Home"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar3" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/baloo"
-        android:text="Discover new distantion"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_Text" />
+            <TextView
+                android:id="@+id/home_Text"
+                android:layout_width="0dp"
+                android:layout_height="41dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/baloo"
+                android:text="Home"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="183dp"
-        android:layout_height="140dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar3"
-        app:srcCompat="@drawable/projectpic5" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/baloo"
+                android:text="Discover new distantion"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_Text" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="128dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/finallogo" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dashboardRecycleVeiw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintVertical_bias="1.0">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar3"
+                android:layout_width="371dp"
+                android:layout_height="54dp"
+                android:background="@color/white"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintBottom_toTopOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
