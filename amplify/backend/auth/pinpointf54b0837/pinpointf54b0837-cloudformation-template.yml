@@ -122,7 +122,10 @@ Parameters:
   userPoolGroupList:
     Type: CommaDelimitedList
       
+<<<<<<< HEAD
             
+=======
+>>>>>>> 30016e731270739c236ac29b2259094ca6430cfd
   serviceName:
     Type: String
   

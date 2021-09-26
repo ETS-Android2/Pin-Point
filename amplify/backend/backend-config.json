@@ -41,5 +41,14 @@
         ]
       }
     }
+<<<<<<< HEAD
+=======
+  },
+  "storage": {
+    "pinpoints3": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+>>>>>>> 30016e731270739c236ac29b2259094ca6430cfd
   }
 }

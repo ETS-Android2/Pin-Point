@@ -9,14 +9,7 @@ subscription OnCreateUser {
     email
     img
     following {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -30,39 +23,11 @@ subscription OnCreateUser {
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     followers {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -76,29 +41,8 @@ subscription OnCreateUser {
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     Pins {
       items {
@@ -137,14 +81,7 @@ subscription OnUpdateUser {
     email
     img
     following {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -158,39 +95,11 @@ subscription OnUpdateUser {
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     followers {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -204,29 +113,8 @@ subscription OnUpdateUser {
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     Pins {
       items {
@@ -265,14 +153,7 @@ subscription OnDeleteUser {
     email
     img
     following {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -286,39 +167,11 @@ subscription OnDeleteUser {
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     followers {
-      id
-      userName
-      firstName
-      lastName
-      bio
-      email
-      img
-      following {
+      items {
         id
         userName
         firstName
@@ -332,29 +185,8 @@ subscription OnDeleteUser {
         createdAt
         updatedAt
       }
-      followers {
-        id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      Pins {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
+      nextToken
+      startedAt
     }
     Pins {
       items {

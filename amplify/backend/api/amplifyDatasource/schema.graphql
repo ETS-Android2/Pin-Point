@@ -1,4 +1,4 @@
-type User @model {
+type User @model @key(name: "byUser", fields: ["userName"]){
     id: ID!
     userName: String
     firstName: String
@@ -6,8 +6,8 @@ type User @model {
     bio: String
     email: String
     img: String
-    following: [User]
-    followers: [User]
+    following: [User] @connection
+    followers: [User] @connection
     Pins:[Pin] @connection(keyName: "byUser", fields: ["id"])
 }
 
@@ -28,3 +28,4 @@ type Pin @model
 #input Pin {
 #    isPrivate: Boolean = false
 #}
+
