@@ -29,20 +29,24 @@ public class CompleteRegistration extends AppCompatActivity {
     String fileName;
     String userName;
     Uri dataUri;
-
-    TextView firstNameInput = findViewById(R.id.firstNameInput);
-    TextView lastNameInput = findViewById(R.id.lastNameInput);
-    TextView bioInput = findViewById(R.id.bioInput);
-    TextView imgName = findViewById(R.id.imgName);
-    Button selectImgBtn = findViewById(R.id.selectImgBtn);
-    Button saveBtn = findViewById(R.id.saveBtn);
-
-
+    TextView firstNameInput;
+    TextView lastNameInput;
+    TextView bioInput;
+    TextView imgName;
+    Button selectImgBtn;
+    Button saveBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_registration);
         configure();
+
+        firstNameInput = findViewById(R.id.firstNameInput);
+        lastNameInput = findViewById(R.id.lastNameInput);
+        bioInput = findViewById(R.id.bioInput);
+         imgName = findViewById(R.id.imgName);
+         selectImgBtn = findViewById(R.id.selectImgBtn);
+         saveBtn = findViewById(R.id.saveBtn);
         selectImgBtn.setOnClickListener(view -> pickFile());
         saveBtn.setOnClickListener(view -> handelRegistration());
 
@@ -90,7 +94,7 @@ public class CompleteRegistration extends AppCompatActivity {
 
         Amplify.API.mutate(ModelMutation.create(newUser),
                 response -> {
-                    Log.i("CompleteRegistration", "Todo with id: " + response.getData().getId());
+                    Log.i("CompleteRegistration", "Todo with id: " + response.getErrors());
                     uploadImage();
                 },
                 error -> Log.e("CompleteRegistration", "Create failed", error)
