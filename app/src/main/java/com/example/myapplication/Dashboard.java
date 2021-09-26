@@ -58,10 +58,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
             case R.id.nav_logout:
                 logout();
-            case R.id.nav_profile:
-                goToProfile();
+                break;
             case R.id.nav_discover:
                 goToDicover();
+                break;
+            case R.id.nav_profile:
+                goToProfile();
+                break;
 
         }
 
@@ -75,6 +78,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                     Log.i("logout", "successfully logout");
                     Intent goToLogin = new Intent(getBaseContext(), Login.class);
                     startActivity(goToLogin);
+                    finish();
                 } ,
                 error -> Log.e("logout", error.toString())
         );
