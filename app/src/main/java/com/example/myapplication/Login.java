@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity {
                 password,
                 success ->{
                     Log.i("signIn", "signIn successful: " + success.toString());
-                    Intent goToMain = new Intent(Login.this, CompleteRegistration.class);
+                    Intent goToMain = new Intent(Login.this, Dashboard.class);
                     goToMain.putExtra("userName",userName);
                     startActivity(goToMain);
                 },
