@@ -11,8 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.aws.GsonVariablesSerializer;
+import com.amplifyframework.api.graphql.GraphQLRequest;
+import com.amplifyframework.api.graphql.SimpleGraphQLRequest;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Pin;
+import com.amplifyframework.datastore.generated.model.User;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
+
+import java.util.Collections;
 
 public class Login extends AppCompatActivity {
 
@@ -49,7 +58,8 @@ public class Login extends AppCompatActivity {
                 password,
                 success ->{
                     Log.i("signIn", "signIn successful: " + success.toString());
-                    Intent goToMain = new Intent(Login.this, Dashboard.class);
+                    Intent goToMain = new Intent(Login.this, CompleteRegistration.class);
+                    goToMain.putExtra("userName",userName);
                     startActivity(goToMain);
                 },
                 error ->{
@@ -61,6 +71,7 @@ public class Login extends AppCompatActivity {
         try {
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            Amplify.addPlugin(new AWSS3StoragePlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
@@ -72,4 +83,36 @@ public class Login extends AppCompatActivity {
                 error -> Log.e("AmplifyQuickstart", error.toString())
         );
     }
+
+
 }
+
+//        Amplify.API.query(
+//                ModelQuery.(Pin.class, User.USER_NAME: "Fsdds" ),
+//                response -> {
+//                    for (Pin todo : response.getData()) {
+//                        Log.i("MyAmplifyApp", Pin.getName());
+//                    }
+//                },
+//                error -> Log.e("MyAmplifyApp", "Query failure", error)
+//        );
+
+//        private GraphQLRequest<Pin> getPinRequest(String id) {
+//            String document = "query getPin($id: ID!) { "
+//                    + "getTodo(id: $id) { "
+//                    + "id "
+//                    + "name "
+//                    + "}"
+//                    + "}";
+//            return new SimpleGraphQLRequest<>(
+//                    document,
+//                    Collections.singletonMap("id", id),
+//                    Pin.class,
+//                    new GsonVariablesSerializer());
+//        }
+
+//
+//Amplify.API.query(getTodoRequest("[TODO_ID]"),
+//        response -> Log.d("MyAmplifyApp", "response" + response),
+//        error -> Log.e("MyAmplifyApp", "error" + error)
+//        );

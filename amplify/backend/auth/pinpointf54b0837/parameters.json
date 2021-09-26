@@ -1,6 +1,6 @@
 {
     "identityPoolName": "pinpointf54b0837_identitypool_f54b0837",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "pinpoif54b0837",
     "userPoolName": "pinpointf54b0837_userpool_f54b0837",
     "autoVerifiedAttributes": [
