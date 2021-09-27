@@ -12,19 +12,29 @@ subscription OnCreateUser {
       items {
         id
         userID
+        userFollowing
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     followers {
       items {
         id
         userID
+        userFollower
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     Pins {
       items {
@@ -37,11 +47,18 @@ subscription OnCreateUser {
         lat
         lon
         locatName
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -59,19 +76,29 @@ subscription OnUpdateUser {
       items {
         id
         userID
+        userFollowing
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     followers {
       items {
         id
         userID
+        userFollower
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     Pins {
       items {
@@ -84,11 +111,18 @@ subscription OnUpdateUser {
         lat
         lon
         locatName
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -106,19 +140,29 @@ subscription OnDeleteUser {
       items {
         id
         userID
+        userFollowing
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     followers {
       items {
         id
         userID
+        userFollower
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     Pins {
       items {
@@ -131,11 +175,18 @@ subscription OnDeleteUser {
         lat
         lon
         locatName
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -144,6 +195,32 @@ subscription OnCreatePin {
   onCreatePin {
     id
     userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     title
     body
     isPrivate
@@ -151,6 +228,9 @@ subscription OnCreatePin {
     lat
     lon
     locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -159,6 +239,32 @@ subscription OnUpdatePin {
   onUpdatePin {
     id
     userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     title
     body
     isPrivate
@@ -166,6 +272,9 @@ subscription OnUpdatePin {
     lat
     lon
     locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -174,6 +283,32 @@ subscription OnDeletePin {
   onDeletePin {
     id
     userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     title
     body
     isPrivate
@@ -181,6 +316,9 @@ subscription OnDeletePin {
     lat
     lon
     locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -199,16 +337,26 @@ subscription OnCreateFollowing {
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollowing
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -227,16 +375,26 @@ subscription OnUpdateFollowing {
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollowing
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -255,16 +413,26 @@ subscription OnDeleteFollowing {
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollowing
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -283,16 +451,26 @@ subscription OnCreateFollower {
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollower
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -311,16 +489,26 @@ subscription OnUpdateFollower {
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollower
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -339,16 +527,26 @@ subscription OnDeleteFollower {
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollower
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }

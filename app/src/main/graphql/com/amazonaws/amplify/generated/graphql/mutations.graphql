@@ -15,19 +15,29 @@ mutation CreateUser(
       items {
         id
         userID
+        userFollowing
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     followers {
       items {
         id
         userID
+        userFollower
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     Pins {
       items {
@@ -40,11 +50,18 @@ mutation CreateUser(
         lat
         lon
         locatName
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -65,19 +82,29 @@ mutation UpdateUser(
       items {
         id
         userID
+        userFollowing
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     followers {
       items {
         id
         userID
+        userFollower
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     Pins {
       items {
@@ -90,11 +117,18 @@ mutation UpdateUser(
         lat
         lon
         locatName
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -115,19 +149,29 @@ mutation DeleteUser(
       items {
         id
         userID
+        userFollowing
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     followers {
       items {
         id
         userID
+        userFollower
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     Pins {
       items {
@@ -140,11 +184,18 @@ mutation DeleteUser(
         lat
         lon
         locatName
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -156,6 +207,32 @@ mutation CreatePin(
   createPin(input: $input, condition: $condition) {
     id
     userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     title
     body
     isPrivate
@@ -163,6 +240,9 @@ mutation CreatePin(
     lat
     lon
     locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -174,6 +254,32 @@ mutation UpdatePin(
   updatePin(input: $input, condition: $condition) {
     id
     userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     title
     body
     isPrivate
@@ -181,6 +287,9 @@ mutation UpdatePin(
     lat
     lon
     locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -192,6 +301,32 @@ mutation DeletePin(
   deletePin(input: $input, condition: $condition) {
     id
     userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     title
     body
     isPrivate
@@ -199,6 +334,9 @@ mutation DeletePin(
     lat
     lon
     locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -220,16 +358,26 @@ mutation CreateFollowing(
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollowing
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -251,16 +399,26 @@ mutation UpdateFollowing(
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollowing
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -282,16 +440,26 @@ mutation DeleteFollowing(
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollowing
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -313,16 +481,26 @@ mutation CreateFollower(
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollower
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -344,16 +522,26 @@ mutation UpdateFollower(
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollower
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -375,16 +563,26 @@ mutation DeleteFollower(
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollower
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
