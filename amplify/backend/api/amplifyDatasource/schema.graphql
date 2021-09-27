@@ -6,8 +6,8 @@ type User @model @key(name: "byUser", fields: ["userName"]){
     bio: String
     email: String
     img: String
-    following: [User] @connection
-    followers: [User] @connection
+    followings: [Following] @connection(keyName: "byUser", fields: ["id"])
+    followers: [Follower] @connection(keyName: "byUser", fields: ["id"])
     Pins:[Pin] @connection(keyName: "byUser", fields: ["id"])
 }
 
@@ -24,8 +24,16 @@ type Pin @model
     locatName:String
 }
 
-#
-#input Pin {
-#    isPrivate: Boolean = false
-#}
+type Following @model
+@key(name: "byUser", fields: ["userID"]){
+    id:ID!
+    userID: ID!
+    user:User!
+}
 
+type Follower @model
+@key(name: "byUser", fields: ["userID"]){
+    id:ID!
+    userID: ID!
+    user:User!
+}

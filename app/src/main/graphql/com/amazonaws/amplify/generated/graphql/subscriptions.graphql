@@ -8,41 +8,23 @@ subscription OnCreateUser {
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
+        userID
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
+        userID
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
     Pins {
       items {
@@ -55,18 +37,11 @@ subscription OnCreateUser {
         lat
         lon
         locatName
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -80,41 +55,23 @@ subscription OnUpdateUser {
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
+        userID
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
+        userID
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
     Pins {
       items {
@@ -127,18 +84,11 @@ subscription OnUpdateUser {
         lat
         lon
         locatName
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -152,41 +102,23 @@ subscription OnDeleteUser {
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
+        userID
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
-        _version
-        _deleted
-        _lastChangedAt
+        userID
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
     Pins {
       items {
@@ -199,18 +131,11 @@ subscription OnDeleteUser {
         lat
         lon
         locatName
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -226,9 +151,6 @@ subscription OnCreatePin {
     lat
     lon
     locatName
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -244,9 +166,6 @@ subscription OnUpdatePin {
     lat
     lon
     locatName
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -262,9 +181,174 @@ subscription OnDeletePin {
     lat
     lon
     locatName
-    _version
-    _deleted
-    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateFollowing {
+  onCreateFollowing {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+      }
+      followers {
+        nextToken
+      }
+      Pins {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateFollowing {
+  onUpdateFollowing {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+      }
+      followers {
+        nextToken
+      }
+      Pins {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteFollowing {
+  onDeleteFollowing {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+      }
+      followers {
+        nextToken
+      }
+      Pins {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateFollower {
+  onCreateFollower {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+      }
+      followers {
+        nextToken
+      }
+      Pins {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateFollower {
+  onUpdateFollower {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+      }
+      followers {
+        nextToken
+      }
+      Pins {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteFollower {
+  onDeleteFollower {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+      }
+      followers {
+        nextToken
+      }
+      Pins {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }

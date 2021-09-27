@@ -41,15 +41,15 @@ public class Following extends AppCompatActivity {
 
 
         // modify the condition
-        Amplify.API.query(
-                ModelQuery.get(User.class,"hello"),
-                response ->{
-                    Log.i("MyAmplifyApp", "okay");
-                    users=response.getData().getFollowing();
-                    handler.sendEmptyMessage(1);
-                },
-                error -> Log.e("MyAmplifyApp", error.toString(), error)
-        );
+//        Amplify.API.query(
+//                ModelQuery.get(User.class,"hello"),
+//                response ->{
+//                    Log.i("MyAmplifyApp", "okay");
+//                    users=response.getData().getFollowings();
+//                    handler.sendEmptyMessage(1);
+//                },
+//                error -> Log.e("MyAmplifyApp", error.toString(), error)
+//        );
 
 
     }

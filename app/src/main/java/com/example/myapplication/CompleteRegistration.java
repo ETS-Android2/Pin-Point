@@ -23,11 +23,14 @@ import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 
 public class CompleteRegistration extends AppCompatActivity {
 
     String fileName;
     String userName;
+    List<User> followers;
+    List<User> followings;
     Uri dataUri;
     TextView firstNameInput;
     TextView lastNameInput;
@@ -35,21 +38,25 @@ public class CompleteRegistration extends AppCompatActivity {
     TextView imgName;
     Button selectImgBtn;
     Button saveBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_registration);
-        configure();
+//        configure();
+        Intent intent = getIntent();
 
+        userName = intent.getExtras().getString("userName");
         firstNameInput = findViewById(R.id.firstNameInput);
         lastNameInput = findViewById(R.id.lastNameInput);
         bioInput = findViewById(R.id.bioInput);
-         imgName = findViewById(R.id.imgName);
-         selectImgBtn = findViewById(R.id.selectImgBtn);
-         saveBtn = findViewById(R.id.saveBtn);
-        selectImgBtn.setOnClickListener(view -> pickFile());
-        saveBtn.setOnClickListener(view -> handelRegistration());
+        imgName = findViewById(R.id.imgName);
+        selectImgBtn = findViewById(R.id.selectImgBtn);
+        saveBtn = findViewById(R.id.saveBtn);
 
+        selectImgBtn.setOnClickListener(view -> pickFile());
+
+        saveBtn.setOnClickListener(view -> handelRegistration());
     }
 
 
@@ -59,7 +66,7 @@ public class CompleteRegistration extends AppCompatActivity {
         dataUri = data.getData();
         File file = new File(dataUri.getPath());
         fileName = file.getName();
-        Log.i("0000000000",fileName);
+        Log.i("0000000000", fileName);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -72,9 +79,9 @@ public class CompleteRegistration extends AppCompatActivity {
         startActivityForResult(selectedFile, 1234);
     }
 
-    private void uploadImage(){
+    private void uploadImage() {
         try {
-            if (dataUri!=null){
+            if (dataUri != null) {
                 InputStream inputStream = getContentResolver().openInputStream(dataUri);
                 Amplify.Storage.uploadInputStream(
                         fileName,
@@ -89,19 +96,21 @@ public class CompleteRegistration extends AppCompatActivity {
         }
     }
 
-    void handelRegistration(){
+    void handelRegistration() {
         User newUser = User.builder().userName(userName).firstName(firstNameInput.getText().toString()).lastName(lastNameInput.getText().toString()).bio(bioInput.getText().toString()).img(fileName).build();
 
         Amplify.API.mutate(ModelMutation.create(newUser),
                 response -> {
-                    Log.i("CompleteRegistration", "Todo with id: " + response.getErrors());
+                    Log.i("CompleteRegistration", "Todo with id: " + response.toString());
                     uploadImage();
+//                    Intent goToMain = new Intent(CompleteRegistration.this, Dashboard.class);
+
                 },
                 error -> Log.e("CompleteRegistration", "Create failed", error)
         );
     }
 
-    void configure(){
+    void configure() {
         try {
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
