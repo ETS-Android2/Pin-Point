@@ -1,5 +1,6 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.annotations.BelongsTo;
 import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
@@ -22,17 +23,23 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 @Index(name = "byUser", fields = {"userID"})
 public final class Follower implements Model {
   public static final QueryField ID = field("Follower", "id");
-  public static final QueryField USER_ID = field("Follower", "userID");
+  public static final QueryField USER = field("Follower", "userID");
+  public static final QueryField USER_FOLLOWER = field("Follower", "userFollower");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="ID", isRequired = true) String userID;
+  private final @ModelField(targetType="User") @BelongsTo(targetName = "userID", type = User.class) User user;
+  private final @ModelField(targetType="String") String userFollower;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
       return id;
   }
   
-  public String getUserId() {
-      return userID;
+  public User getUser() {
+      return user;
+  }
+  
+  public String getUserFollower() {
+      return userFollower;
   }
   
   public Temporal.DateTime getCreatedAt() {
@@ -43,9 +50,10 @@ public final class Follower implements Model {
       return updatedAt;
   }
   
-  private Follower(String id, String userID) {
+  private Follower(String id, User user, String userFollower) {
     this.id = id;
-    this.userID = userID;
+    this.user = user;
+    this.userFollower = userFollower;
   }
   
   @Override
@@ -57,7 +65,8 @@ public final class Follower implements Model {
       } else {
       Follower follower = (Follower) obj;
       return ObjectsCompat.equals(getId(), follower.getId()) &&
-              ObjectsCompat.equals(getUserId(), follower.getUserId()) &&
+              ObjectsCompat.equals(getUser(), follower.getUser()) &&
+              ObjectsCompat.equals(getUserFollower(), follower.getUserFollower()) &&
               ObjectsCompat.equals(getCreatedAt(), follower.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), follower.getUpdatedAt());
       }
@@ -67,7 +76,8 @@ public final class Follower implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
-      .append(getUserId())
+      .append(getUser())
+      .append(getUserFollower())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -79,14 +89,15 @@ public final class Follower implements Model {
     return new StringBuilder()
       .append("Follower {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("userID=" + String.valueOf(getUserId()) + ", ")
+      .append("user=" + String.valueOf(getUser()) + ", ")
+      .append("userFollower=" + String.valueOf(getUserFollower()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
       .toString();
   }
   
-  public static UserIdStep builder() {
+  public static BuildStep builder() {
       return new Builder();
   }
   
@@ -111,75 +122,76 @@ public final class Follower implements Model {
     }
     return new Follower(
       id,
+      null,
       null
     );
   }
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      userID);
+      user,
+      userFollower);
   }
-  public interface UserIdStep {
-    BuildStep userId(String userId);
-  }
-  
-
   public interface BuildStep {
     Follower build();
     BuildStep id(String id) throws IllegalArgumentException;
+    BuildStep user(User user);
+    BuildStep userFollower(String userFollower);
   }
   
 
-  public static class Builder implements UserIdStep, BuildStep {
+  public static class Builder implements BuildStep {
     private String id;
-    private String userID;
+    private User user;
+    private String userFollower;
     @Override
      public Follower build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
         return new Follower(
           id,
-          userID);
+          user,
+          userFollower);
     }
     
     @Override
-     public BuildStep userId(String userId) {
-        Objects.requireNonNull(userId);
-        this.userID = userId;
+     public BuildStep user(User user) {
+        this.user = user;
+        return this;
+    }
+    
+    @Override
+     public BuildStep userFollower(String userFollower) {
+        this.userFollower = userFollower;
         return this;
     }
     
     /** 
-     * WARNING: Do not set ID when creating a new object. Leave this blank and one will be auto generated for you.
-     * This should only be set when referring to an already existing object.
      * @param id id
      * @return Current Builder instance, for fluent method chaining
-     * @throws IllegalArgumentException Checks that ID is in the proper format
      */
-    public BuildStep id(String id) throws IllegalArgumentException {
+    public BuildStep id(String id) {
         this.id = id;
-        
-        try {
-            UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
-        } catch (Exception exception) {
-          throw new IllegalArgumentException("Model IDs must be unique in the format of UUID.",
-                    exception);
-        }
-        
         return this;
     }
   }
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String userId) {
+    private CopyOfBuilder(String id, User user, String userFollower) {
       super.id(id);
-      super.userId(userId);
+      super.user(user)
+        .userFollower(userFollower);
     }
     
     @Override
-     public CopyOfBuilder userId(String userId) {
-      return (CopyOfBuilder) super.userId(userId);
+     public CopyOfBuilder user(User user) {
+      return (CopyOfBuilder) super.user(user);
+    }
+    
+    @Override
+     public CopyOfBuilder userFollower(String userFollower) {
+      return (CopyOfBuilder) super.userFollower(userFollower);
     }
   }
   

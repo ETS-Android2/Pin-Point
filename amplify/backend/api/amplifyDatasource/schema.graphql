@@ -15,6 +15,7 @@ type Pin @model
 @key(name: "byUser", fields: ["userID","locatName"]) {
     id: ID!
     userID: ID!
+    user:User @connection(fields: ["userID"])
     title: String!
     body: String
     isPrivate:Boolean
@@ -28,12 +29,14 @@ type Following @model
 @key(name: "byUser", fields: ["userID"]){
     id:ID!
     userID: ID!
-    user:User!
+    user:User @connection(fields: ["userID"])
+    userFollowing:String
 }
 
 type Follower @model
 @key(name: "byUser", fields: ["userID"]){
     id:ID!
     userID: ID!
-    user:User!
+    user:User @connection(fields: ["userID"])
+    userFollower:String
 }

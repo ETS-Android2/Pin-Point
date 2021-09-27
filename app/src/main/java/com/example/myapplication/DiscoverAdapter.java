@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Follower;
+import com.amplifyframework.datastore.generated.model.Following;
 import com.amplifyframework.datastore.generated.model.User;
 
 import java.util.ArrayList;
@@ -47,16 +49,16 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
                 @Override
                 public void onClick(View v) {
                     User meUser=   getMyUser();
-                    meUser.getFollowing().add(user);
-                    user.getFollowers().add(meUser);
-
-                    Amplify.API.mutate(ModelMutation.update(meUser),
-                            response -> Log.i("MyAmplifyApp", "Todo with id: " + response.getData().getId()),
-                            error -> Log.e("MyAmplifyApp", "Create failed", error)
+//                   User userCopy=meUser.copyOfBuilder().
+                    Following followingUser=Following.builder().user(meUser).userFollowing(user.getId()).build();
+                    Follower followerUser=Follower.builder().user(user).userFollower(meUser.getId()).build();
+                    Amplify.API.mutate(ModelMutation.create(followingUser),
+                            response -> Log.i("following", "following with id: " + response.getData().getId()),
+                            error -> Log.e("following", "Create failed", error)
                     );
-                    Amplify.API.mutate(ModelMutation.update(user),
-                            response -> Log.i("MyAmplifyApp", "Todo with id: " + response.getData().getId()),
-                            error -> Log.e("MyAmplifyApp", "Create failed", error)
+                    Amplify.API.mutate(ModelMutation.create(followerUser),
+                            response -> Log.i("follower", "follower with id: " + response.getData().getId()),
+                            error -> Log.e("follower", "Create failed", error)
                     );
 //                    toDetailsPage.putExtra("title",task.getTitle());
 //                    toDetailsPage.putExtra("body",task.getBody());

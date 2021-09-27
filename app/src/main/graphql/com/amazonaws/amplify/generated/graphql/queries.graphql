@@ -1,4 +1,46 @@
 # this is an auto generated file. This will be overwritten
+query SyncUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncUsers(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
 query GetUser($id: ID!) {
   getUser(id: $id) {
     id
@@ -12,19 +54,29 @@ query GetUser($id: ID!) {
       items {
         id
         userID
+        userFollowing
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     followers {
       items {
         id
         userID
+        userFollower
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
     Pins {
       items {
@@ -37,11 +89,18 @@ query GetUser($id: ID!) {
         lat
         lon
         locatName
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -62,23 +121,102 @@ query ListUsers(
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
     nextToken
+    startedAt
+  }
+}
+query SyncPins(
+  $filter: ModelPinFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncPins(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      title
+      body
+      isPrivate
+      pinImg
+      lat
+      lon
+      locatName
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
   }
 }
 query GetPin($id: ID!) {
   getPin(id: $id) {
     id
     userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     title
     body
     isPrivate
@@ -86,6 +224,9 @@ query GetPin($id: ID!) {
     lat
     lon
     locatName
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -95,6 +236,20 @@ query ListPins($filter: ModelPinFilterInput, $limit: Int, $nextToken: String) {
     items {
       id
       userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
       title
       body
       isPrivate
@@ -102,10 +257,54 @@ query ListPins($filter: ModelPinFilterInput, $limit: Int, $nextToken: String) {
       lat
       lon
       locatName
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
     nextToken
+    startedAt
+  }
+}
+query SyncFollowings(
+  $filter: ModelFollowingFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncFollowings(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      userFollowing
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
   }
 }
 query GetFollowing($id: ID!) {
@@ -122,16 +321,26 @@ query GetFollowing($id: ID!) {
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollowing
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -153,13 +362,61 @@ query ListFollowings(
         bio
         email
         img
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      userFollowing
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
     nextToken
+    startedAt
+  }
+}
+query SyncFollowers(
+  $filter: ModelFollowerFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncFollowers(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      userFollower
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
   }
 }
 query GetFollower($id: ID!) {
@@ -176,16 +433,26 @@ query GetFollower($id: ID!) {
       img
       followings {
         nextToken
+        startedAt
       }
       followers {
         nextToken
+        startedAt
       }
       Pins {
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
+    userFollower
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -207,12 +474,20 @@ query ListFollowers(
         bio
         email
         img
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      userFollower
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
     nextToken
+    startedAt
   }
 }
