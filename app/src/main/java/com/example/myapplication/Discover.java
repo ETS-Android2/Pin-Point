@@ -20,38 +20,57 @@ import java.util.List;
 
 public class Discover extends AppCompatActivity {
     RecyclerView recyclerView;
-    List<User> usersList=new ArrayList<>();
+    List<User> usersList = new ArrayList<>();
+    User meUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
-        recyclerView=findViewById(R.id.DicoverRecycleVeiw);
-        recyclerView.setAdapter(new DiscoverAdapter(usersList,this));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        gettingUsers();
+
+//        String userName=com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
+//        Amplify.API.query(
+//                ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
+//                response -> {
+//                    for (User user : response.getData()) {
+//                        meUser=user;
+//                    }
+//                },
+//                error -> Log.e("MyAmplifyApp", "Query failure", error)
+//        );
+
 
 
     }
 
-        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
-            @Override
-            public boolean handleMessage(@NonNull Message msg) {
-                recyclerView.getAdapter().notifyDataSetChanged();
-                return false;
-            }
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
+        gettingUsers();
+        recyclerView = findViewById(R.id.DicoverRecycleVeiw);
+        recyclerView.setAdapter(new DiscoverAdapter(usersList, this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-    public void gettingUsers(){
-      Amplify.API.query(
-              ModelQuery.list(User.class),
-    response -> {
-        for (User user : response.getData()) {
-            usersList.add(user);
-            handler.sendEmptyMessage(1);
-            Log.i("MyAmplifyApp", user.getFirstName());
+    Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            recyclerView.getAdapter().notifyDataSetChanged();
+            return false;
         }
-    },
-    error -> Log.e("MyAmplifyApp", "Query failure", error)
-            );
+    });
+
+    public void gettingUsers() {
+        Amplify.API.query(
+                ModelQuery.list(User.class),
+                response2 -> {
+                    for (User user : response2.getData()) {
+                        usersList.add(user);
+                        Log.i("MyAmplifyApp", user.getFirstName());
+                    }
+                    handler.sendEmptyMessage(1);
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
     }
 }

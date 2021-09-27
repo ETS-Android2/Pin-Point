@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +32,9 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
 
     List<User> users=new ArrayList<User>();
     Context context;
+    static User  meUser;
+
+
 
     public DiscoverAdapter(List<User> users, Context context) {
         this.users = users;
@@ -45,21 +49,53 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
         public UserVeiwHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView=itemView;
-            itemView.findViewById(R.id.followButtonFragmentId).setOnClickListener(new View.OnClickListener() {
+            Button follow = itemView.findViewById(R.id.followButtonFragmentId);
+            Button unfollow = itemView.findViewById(R.id.unfollowButtonFragmentId);
+
+            String userName=com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
+            Amplify.API.query(
+                    ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
+                    response -> {
+                        for (User x : response.getData()) {
+                            meUser=x;
+                            Log.i("TestUser", meUser.getFollowings().toString());
+                        }
+                        Log.i("TestUser", String.valueOf(!meUser.getFollowings().isEmpty()));
+
+                        follow.setVisibility(View.VISIBLE);
+                        unfollow.setVisibility(View.INVISIBLE);
+                        if(!meUser.getFollowings().isEmpty()){
+                            for (Following following : meUser.getFollowings()) {
+                                if (following.getUserFollowing().equals(user.getId())) {
+                                    unfollow.setVisibility(View.VISIBLE);
+                                    follow.setVisibility(View.INVISIBLE);
+                                } else {
+                                    follow.setVisibility(View.VISIBLE);
+                                    unfollow.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                    },
+                    error -> Log.e("MyAmplifyApp", "Query failure", error)
+            );
+
+            follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    User meUser=   getMyUser();
 //                   User userCopy=meUser.copyOfBuilder().
                     Following followingUser=Following.builder().user(meUser).userFollowing(user.getId()).build();
                     Follower followerUser=Follower.builder().user(user).userFollower(meUser.getId()).build();
                     Amplify.API.mutate(ModelMutation.create(followingUser),
-                            response -> Log.i("following", "following with id: " + response.getData().getId()),
+                            response1 -> Log.i("following", "following with id: " + response1.getData().getId()),
                             error -> Log.e("following", "Create failed", error)
                     );
                     Amplify.API.mutate(ModelMutation.create(followerUser),
-                            response -> Log.i("follower", "follower with id: " + response.getData().getId()),
+                            response2 -> Log.i("follower", "follower with id: " + response2.getData().getId()),
                             error -> Log.e("follower", "Create failed", error)
                     );
+                }
+
+
 //                    toDetailsPage.putExtra("title",task.getTitle());
 //                    toDetailsPage.putExtra("body",task.getBody());
 //                    toDetailsPage.putExtra("state",task.getState());
@@ -68,7 +104,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
 //                    toDetailsPage.putExtra("lat",task.getLat());
 //
 //                    v.getContext().startActivity(toDetailsPage);
-                }
+//                }
             });
 //            mainLayout=itemView.findViewById(R.id.pin_original);
         }
@@ -82,9 +118,15 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
         return taskVeiwHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UserVeiwHolder holder, @SuppressLint("RecyclerView") int position) {
-//        holder.taskModel=pins.get(position);
+
+        holder.user = users.get(position);
+        TextView taskTitle = holder.itemView.findViewById(R.id.use_name_name);
+        taskTitle.setText(holder.user.getFirstName()+" "+ holder.user.getLastName());
+
+        //        holder.taskModel=pins.get(position);
 //        ImageView map=holder.itemView.findViewById(R.id.map_id);
 //        map.setImageBitmap(holder.taskModel.getTitle());
 //        TextView taskbody=holder.itemView.findViewById(R.id.bodyView);
@@ -122,17 +164,18 @@ public static User getMyUser(){
             response -> {
                 for (User user : response.getData()) {
                     meUserList.add(user);
-
                     Log.i("MyAmplifyApp","hh");
                 }
             },
             error -> Log.e("MyAmplifyApp", "Query failure", error)
     );
+    Log.i("GetUser",meUserList.get(0).getUserName());
+
     return meUserList.get(0);
 }
     @Override
     public int getItemCount() {
-        return 10;
+        return users.size();
     }
 
 }

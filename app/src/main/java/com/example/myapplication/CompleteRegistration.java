@@ -103,8 +103,9 @@ public class CompleteRegistration extends AppCompatActivity {
                 response -> {
                     Log.i("CompleteRegistration", "Todo with id: " + response.toString());
                     uploadImage();
-//                    Intent goToMain = new Intent(CompleteRegistration.this, Dashboard.class);
-
+                    Intent goToMain = new Intent(CompleteRegistration.this, Dashboard.class);
+                    startActivity(goToMain);
+                    finish();
                 },
                 error -> Log.e("CompleteRegistration", "Create failed", error)
         );
