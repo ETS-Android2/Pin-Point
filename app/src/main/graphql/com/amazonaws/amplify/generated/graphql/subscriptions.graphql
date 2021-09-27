@@ -8,15 +8,10 @@ subscription OnCreateUser {
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -29,12 +24,7 @@ subscription OnCreateUser {
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -80,15 +70,10 @@ subscription OnUpdateUser {
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -101,12 +86,7 @@ subscription OnUpdateUser {
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -152,15 +132,10 @@ subscription OnDeleteUser {
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -173,12 +148,7 @@ subscription OnDeleteUser {
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -262,6 +232,228 @@ subscription OnDeletePin {
     lat
     lon
     locatName
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateFollowing {
+  onCreateFollowing {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateFollowing {
+  onUpdateFollowing {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteFollowing {
+  onDeleteFollowing {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateFollower {
+  onCreateFollower {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateFollower {
+  onUpdateFollower {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteFollower {
+  onDeleteFollower {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     _version
     _deleted
     _lastChangedAt

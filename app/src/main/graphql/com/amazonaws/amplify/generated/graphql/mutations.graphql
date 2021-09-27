@@ -11,15 +11,10 @@ mutation CreateUser(
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -32,12 +27,7 @@ mutation CreateUser(
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -86,15 +76,10 @@ mutation UpdateUser(
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -107,12 +92,7 @@ mutation UpdateUser(
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -161,15 +141,10 @@ mutation DeleteUser(
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -182,12 +157,7 @@ mutation DeleteUser(
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -280,6 +250,246 @@ mutation DeletePin(
     lat
     lon
     locatName
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateFollowing(
+  $input: CreateFollowingInput!
+  $condition: ModelFollowingConditionInput
+) {
+  createFollowing(input: $input, condition: $condition) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateFollowing(
+  $input: UpdateFollowingInput!
+  $condition: ModelFollowingConditionInput
+) {
+  updateFollowing(input: $input, condition: $condition) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteFollowing(
+  $input: DeleteFollowingInput!
+  $condition: ModelFollowingConditionInput
+) {
+  deleteFollowing(input: $input, condition: $condition) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateFollower(
+  $input: CreateFollowerInput!
+  $condition: ModelFollowerConditionInput
+) {
+  createFollower(input: $input, condition: $condition) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateFollower(
+  $input: UpdateFollowerInput!
+  $condition: ModelFollowerConditionInput
+) {
+  updateFollower(input: $input, condition: $condition) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteFollower(
+  $input: DeleteFollowerInput!
+  $condition: ModelFollowerConditionInput
+) {
+  deleteFollower(input: $input, condition: $condition) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     _version
     _deleted
     _lastChangedAt

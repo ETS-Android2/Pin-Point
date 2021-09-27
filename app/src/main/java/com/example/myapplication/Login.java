@@ -31,43 +31,68 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         configure();
-        Button signIn=findViewById(R.id.signIn_button);
-        EditText username=findViewById(R.id.username_signIn);
-        EditText password=findViewById(R.id.password_signIn);
-        Button signUp=findViewById(R.id.createNewUser);
+        Button signIn = findViewById(R.id.signIn_button);
+        EditText username = findViewById(R.id.username_signIn);
+        EditText password = findViewById(R.id.password_signIn);
+        Button signUp = findViewById(R.id.createNewUser);
 
-        signIn.setOnClickListener(view -> signInfunc(username.getText().toString(),password.getText().toString()));
+        signIn.setOnClickListener(view -> signInfunc(username.getText().toString(), password.getText().toString()));
 
         signUp.setOnClickListener(view ->
-        { Intent intent=new Intent(Login.this, com.example.myapplication.signup.class);
+        {
+            Intent intent = new Intent(Login.this, com.example.myapplication.signup.class);
             startActivity(intent);
         });
 
-        Button fogetpassword=findViewById(R.id.forgetPassword);
+        Button fogetpassword = findViewById(R.id.forgetPassword);
         fogetpassword.setOnClickListener(view -> {
-            Intent newIntent=new Intent(Login.this,ForgetPasswordName.class);
+            Intent newIntent = new Intent(Login.this, ForgetPasswordName.class);
             startActivity(newIntent);
         });
 //        fogetpassword.setOnClickListener(view -> forgetpassword(username.getText().toString()));
     }
 
 
-    void signInfunc(String userName, String password){
+    void signInfunc(String userName, String password) {
         Amplify.Auth.signIn(
                 userName,
                 password,
-                success ->{
+                success -> {
                     Log.i("signIn", "signIn successful: " + success.toString());
-                    Intent goToMain = new Intent(Login.this, CompleteRegistration.class);
-                    goToMain.putExtra("userName",userName);
-                    startActivity(goToMain);
+
+                    Amplify.API.query(
+                            ModelQuery.list(User.class, User.USER_NAME.contains(userName)),
+                            response -> {
+                                Log.i("TestLogin", String.valueOf(response.getData().getItems().toString().equals("[]")));
+                                if (response.getData().getItems().toString().equals("[]")) {
+                                    Intent goToCompleteRegistration = new Intent(Login.this, CompleteRegistration.class);
+                                    goToCompleteRegistration.putExtra("userName", userName);
+                                    startActivity(goToCompleteRegistration);
+                                }else {
+                                    Intent goToHome = new Intent(Login.this, Dashboard.class);
+                                    goToHome.putExtra("userName", userName);
+                                    startActivity(goToHome);
+                                }
+                            },
+                            error -> Log.e("MyAmplifyApp", "Query failure", error)
+                    );
+//                    Intent goToMain = new Intent(Login.this, CompleteRegistration.class);
+//                    goToMain.putExtra("userName",userName);
+//                    startActivity(goToMain);
+
+                    // .eq
+                    // 2021-09-27 15:53:03.787 7327-7549/com.example.myapplication I/TestLogin: PaginatedResult{requestForNextResult=null, items=[User {id=490c3bd0-07b9-4de9-83bf-6d998e9e3ebc, userName=ayo, firstName=Ayyoub, lastName=Alkeyyam, bio=Hello World, email=null, img=1089491807, createdAt=Temporal.DateTime{offsetDateTime='2021-09-27T12:32:00.330Z'}, updatedAt=Temporal.DateTime{offsetDateTime='2021-09-27T12:32:00.330Z'}}]}
+
+                    // .contains
+                    // 2021-09-27 15:55:23.444 7637-7863/com.example.myapplication I/TestLogin: PaginatedResult{requestForNextResult=null, items=[User {id=490c3bd0-07b9-4de9-83bf-6d998e9e3ebc, userName=ayo, firstName=Ayyoub, lastName=Alkeyyam, bio=Hello World, email=null, img=1089491807, createdAt=Temporal.DateTime{offsetDateTime='2021-09-27T12:32:00.330Z'}, updatedAt=Temporal.DateTime{offsetDateTime='2021-09-27T12:32:00.330Z'}}]}
                 },
-                error ->{
+                error -> {
                     Log.e("signIn", "signIn failed: " + error.toString());
                 }
         );
     }
-    void configure(){
+
+    void configure() {
         try {
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
