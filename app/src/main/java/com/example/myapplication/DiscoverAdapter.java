@@ -4,6 +4,8 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.User;
 
 import java.util.ArrayList;
@@ -33,11 +38,36 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
     public static class UserVeiwHolder extends RecyclerView.ViewHolder {
         View itemView;
         ConstraintLayout mainLayout;
-        public User taskModel;
+        public User user;
 
         public UserVeiwHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView=itemView;
+            itemView.findViewById(R.id.followButtonFragmentId).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    User meUser=   getMyUser();
+                    meUser.getFollowing().add(user);
+                    user.getFollowers().add(meUser);
+
+                    Amplify.API.mutate(ModelMutation.update(meUser),
+                            response -> Log.i("MyAmplifyApp", "Todo with id: " + response.getData().getId()),
+                            error -> Log.e("MyAmplifyApp", "Create failed", error)
+                    );
+                    Amplify.API.mutate(ModelMutation.update(user),
+                            response -> Log.i("MyAmplifyApp", "Todo with id: " + response.getData().getId()),
+                            error -> Log.e("MyAmplifyApp", "Create failed", error)
+                    );
+//                    toDetailsPage.putExtra("title",task.getTitle());
+//                    toDetailsPage.putExtra("body",task.getBody());
+//                    toDetailsPage.putExtra("state",task.getState());
+//                    toDetailsPage.putExtra("imgName",task.getImgName());
+//                    toDetailsPage.putExtra("lon",task.getLon());
+//                    toDetailsPage.putExtra("lat",task.getLat());
+//
+//                    v.getContext().startActivity(toDetailsPage);
+                }
+            });
 //            mainLayout=itemView.findViewById(R.id.pin_original);
         }
     }
@@ -81,6 +111,23 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
 //
     }
 
+public static User getMyUser(){
+        ArrayList <User>meUserList=new ArrayList<>();
+
+    String userName=com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
+    Amplify.API.query(
+            ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
+            response -> {
+                for (User user : response.getData()) {
+                    meUserList.add(user);
+
+                    Log.i("MyAmplifyApp","hh");
+                }
+            },
+            error -> Log.e("MyAmplifyApp", "Query failure", error)
+    );
+    return meUserList.get(0);
+}
     @Override
     public int getItemCount() {
         return 10;
