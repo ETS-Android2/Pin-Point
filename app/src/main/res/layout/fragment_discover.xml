@@ -9,7 +9,6 @@
    <com.google.android.material.card.MaterialCardView
        android:layout_width="match_parent"
        android:layout_height="70dp"
-       android:background="@color/black"
        app:cardCornerRadius="5dp"
        app:cardElevation="10dp"
        android:layout_marginTop="5dp">

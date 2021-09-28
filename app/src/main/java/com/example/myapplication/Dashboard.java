@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
+import android.app.ActionBar;
 import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -20,15 +23,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Pin;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
     //Variables
      DrawerLayout drawerLayout;
      NavigationView navigationView;
+     BottomNavigationView bottomNavigationView;
      Toolbar toolbar;
      List<Pin> taskList=new ArrayList();
     @Override
@@ -36,6 +42,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         allNavationBarFunctions();
+        buttonNavigationfun();
     }
 
 
@@ -65,7 +72,17 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             case R.id.nav_profile:
                 goToProfile();
                 break;
-
+            case R.id.profile_butt:
+                goToProfile();
+                break;
+            case R.id.home_butt:
+                break;
+            case R.id.discove_butt:
+                goToDicover();
+                break;
+            case R.id.pin_butt:
+                goToPin();
+                break;
         }
 
         return true;
@@ -99,12 +116,19 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         Intent gotoDiscoverPage=new Intent(Dashboard.this,Discover.class);
         startActivity(gotoDiscoverPage);
     }
+    public void goToPin(){
+        Intent gotoDiscoverPage=new Intent(Dashboard.this,NewPin.class);
+        startActivity(gotoDiscoverPage);
+    }
+
+
 
     public void allNavationBarFunctions(){
         /*----------Hooks---------*/
         drawerLayout =findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_veiw);
         toolbar=findViewById(R.id.toolbar3);
+
 
 
         /*----------toolBar---------*/
@@ -118,11 +142,29 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         navigationView.setNavigationItemSelectedListener(this);
 
+
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
         UserName.setText(getCurrentValue());
 
         RecyclerView recyclerView=findViewById(R.id.dashboardRecycleVeiw);
         recyclerView.setAdapter(new PinAdapter(taskList,this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
     }
+
+    public void buttonNavigationfun(){
+        bottomNavigationView=findViewById(R.id.butt_nav_view);
+        bottomNavigationView.setSelectedItemId(R.id.home_butt);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+    }
+
+//    public void imageBar(){
+//        androidx.appcompat.app.ActionBar actionBar=getSupportActionBar();
+//        actionBar.setDisplayShowCustomEnabled(true);
+//        LayoutInflater inflater=(LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        Veiw v=inflater.inflate(R.layout.cutom_image,null);
+//        actionBar.setCustomView(v);
+//
+//    }
 }
