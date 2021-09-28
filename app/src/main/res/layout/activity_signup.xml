@@ -15,23 +15,25 @@
         android:layout_height="150dp"
         android:transitionName="logo_image"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/finallogo" />
+        app:srcCompat="@drawable/final_logo2" />
 
     <TextView
         android:id="@+id/logo_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Up"
-        android:textSize="40sp"
-        android:transitionName="logo_text"
-        android:fontFamily="@font/baloo"/>
+        android:fontFamily="@font/francois_one"
+        android:textSize="25sp"
+        android:textColor="#E6000000"
+        android:transitionName="logo_text" />
     <TextView
         android:id="@+id/slogan_name"
+        app:backgroundTint="#D9FF021F"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create your account"
         android:textSize="15dp"
-        android:fontFamily="@font/baloo"        />
+        android:fontFamily="@font/francois_one"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,6 +45,7 @@
             android:layout_height="wrap_content"
             app:backgroundTint="@android:color/background_dark"
             android:id="@+id/email_signup"
+            android:fontFamily="@font/francois_one"
             app:startIconDrawable="@drawable/ic_baseline_email_24"
             android:hint="E-mail"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -63,6 +66,7 @@
             android:id="@+id/username_signup"
             app:startIconDrawable="@drawable/ic_baseline_person_24"
             android:hint="Username"
+            android:fontFamily="@font/francois_one"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -82,6 +86,7 @@
             android:hint="password"
             app:startIconDrawable="@drawable/ic_baseline_lock_24"
             app:passwordToggleEnabled="true"
+            android:fontFamily="@font/francois_one"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_signup_text"
@@ -92,21 +97,15 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            app:buttonTint="#DA0037"
-            android:text="CheckBox" />
-
         <Button
             android:id="@+id/signup_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SignUp"
-            app:backgroundTint="#ff021f"
+            android:background="#c10001"
+            app:backgroundTint="#c10001"
             android:padding="15dp"
+            android:fontFamily="@font/francois_one"
             android:textColor="@color/white"
             android:layout_marginTop="5dp"/>
 
@@ -119,12 +118,13 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="173dp"
-            android:layout_height="23dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/baloo"
-            android:text="If You Already Sign up"
+            android:layout_width="159dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="16dp"
+            android:textColor="#E6000000"
+            android:fontFamily="@font/francois_one"
+            android:text="If You Have an Account"
             android:textSize="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -133,12 +133,15 @@
             android:id="@+id/signIn_from_SignUp"
             android:layout_width="129dp"
             android:layout_height="48dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="35dp"
             android:background="#00000000"
             android:text="Sign In"
             android:textAllCaps="false"
-            android:textColor="#ff021f"
+            app:backgroundTint="#c10001"
+            android:textColor="#c10001"
             android:textSize="14dp"
+            android:fontFamily="@font/francois_one"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView"
