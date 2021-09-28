@@ -43,7 +43,6 @@ mutation CreateUser(
       items {
         id
         userID
-        title
         body
         isPrivate
         pinImg
@@ -110,7 +109,6 @@ mutation UpdateUser(
       items {
         id
         userID
-        title
         body
         isPrivate
         pinImg
@@ -177,7 +175,6 @@ mutation DeleteUser(
       items {
         id
         userID
-        title
         body
         isPrivate
         pinImg
@@ -233,7 +230,19 @@ mutation CreatePin(
       createdAt
       updatedAt
     }
-    title
+    place {
+      id
+      address
+      city
+      country
+      approxlat
+      approxlon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     body
     isPrivate
     pinImg
@@ -280,7 +289,19 @@ mutation UpdatePin(
       createdAt
       updatedAt
     }
-    title
+    place {
+      id
+      address
+      city
+      country
+      approxlat
+      approxlon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     body
     isPrivate
     pinImg
@@ -327,7 +348,19 @@ mutation DeletePin(
       createdAt
       updatedAt
     }
-    title
+    place {
+      id
+      address
+      city
+      country
+      approxlat
+      approxlon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     body
     isPrivate
     pinImg
@@ -580,6 +613,60 @@ mutation DeleteFollower(
       updatedAt
     }
     userFollower
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreatePlace(
+  $input: CreatePlaceInput!
+  $condition: ModelPlaceConditionInput
+) {
+  createPlace(input: $input, condition: $condition) {
+    id
+    address
+    city
+    country
+    approxlat
+    approxlon
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdatePlace(
+  $input: UpdatePlaceInput!
+  $condition: ModelPlaceConditionInput
+) {
+  updatePlace(input: $input, condition: $condition) {
+    id
+    address
+    city
+    country
+    approxlat
+    approxlon
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeletePlace(
+  $input: DeletePlaceInput!
+  $condition: ModelPlaceConditionInput
+) {
+  deletePlace(input: $input, condition: $condition) {
+    id
+    address
+    city
+    country
+    approxlat
+    approxlon
     _version
     _deleted
     _lastChangedAt

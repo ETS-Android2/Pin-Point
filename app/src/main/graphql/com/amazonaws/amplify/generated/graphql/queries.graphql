@@ -82,7 +82,6 @@ query GetUser($id: ID!) {
       items {
         id
         userID
-        title
         body
         isPrivate
         pinImg
@@ -170,7 +169,19 @@ query SyncPins(
         createdAt
         updatedAt
       }
-      title
+      place {
+        id
+        address
+        city
+        country
+        approxlat
+        approxlon
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
       body
       isPrivate
       pinImg
@@ -217,7 +228,19 @@ query GetPin($id: ID!) {
       createdAt
       updatedAt
     }
-    title
+    place {
+      id
+      address
+      city
+      country
+      approxlat
+      approxlon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     body
     isPrivate
     pinImg
@@ -250,7 +273,19 @@ query ListPins($filter: ModelPinFilterInput, $limit: Int, $nextToken: String) {
         createdAt
         updatedAt
       }
-      title
+      place {
+        id
+        address
+        city
+        country
+        approxlat
+        approxlon
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
       body
       isPrivate
       pinImg
@@ -481,6 +516,73 @@ query ListFollowers(
         updatedAt
       }
       userFollower
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncPlaces(
+  $filter: ModelPlaceFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncPlaces(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      address
+      city
+      country
+      approxlat
+      approxlon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetPlace($id: ID!) {
+  getPlace(id: $id) {
+    id
+    address
+    city
+    country
+    approxlat
+    approxlon
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListPlaces(
+  $filter: ModelPlaceFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPlaces(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      address
+      city
+      country
+      approxlat
+      approxlon
       _version
       _deleted
       _lastChangedAt

@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +55,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
             Button unfollow = itemView.findViewById(R.id.unfollowButtonFragmentId);
 
 
+
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,6 +70,15 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
                             response2 -> Log.i("follower", "follower with id: " + response2.getData().getId()),
                             error -> Log.e("follower", "Create failed", error)
                     );
+//                    public void handler() {
+//                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                itemView.getContext().startActivity(new Intent(itemView.getContext(),Discover.class));
+//                            }
+//                        });
+//                    }
+//                    handler();
                 }
 
 
@@ -138,6 +150,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
                             }
                         }
                     }
+
 //                    else{
 ////                        unfollow.setVisibility(View.INVISIBLE);
 //                    }
@@ -197,5 +210,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
     public int getItemCount() {
         return users.size();
     }
+
 
 }
