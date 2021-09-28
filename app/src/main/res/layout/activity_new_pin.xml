@@ -20,8 +20,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_baseline_reply_24"
-        app:title="           New Pin"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
+        app:title="        New Pin"
         app:titleMarginEnd="60dp">
 
         <Button

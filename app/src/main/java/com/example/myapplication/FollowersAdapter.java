@@ -58,6 +58,6 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.User
 
     @Override
     public int getItemCount() {
-        return 0;
+        return allUsers.size();
     }
 }

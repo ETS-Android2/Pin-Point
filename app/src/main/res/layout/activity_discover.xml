@@ -37,7 +37,8 @@
                 android:layout_height="41dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="70dp"
-                android:fontFamily="@font/baloo"
+                android:fontFamily="@font/francois_one"
+                android:textColor="#E6000000"
                 android:text="Discover"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toStartOf="@+id/imageView"
@@ -51,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="20dp"
-                android:fontFamily="@font/baloo"
+                android:fontFamily="@font/francois_one"
+                android:textColor="#E6000000"
                 android:text="Find New Friends"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/imageView"
@@ -138,10 +140,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:logo="@drawable/finallogo"
+            app:logo="@drawable/final_logo2"
             app:navigationIcon="@drawable/icon"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-            app:title="                 n">
+            app:title=" ">
 
         </androidx.appcompat.widget.Toolbar>
 
