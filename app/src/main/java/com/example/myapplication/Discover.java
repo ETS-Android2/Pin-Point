@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.auth.AuthUser;
@@ -31,6 +35,7 @@ import com.amplifyframework.datastore.generated.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -231,7 +236,26 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
-        UserName.setText(com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername());
+        ImageView userImage=(ImageView) navigationView.getHeaderView(0).findViewById(R.id.use_image);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Discover.this);
+        //FullName
+        String firstName=sharedPreferences.getString("firstName", "user");
+        String LastName=sharedPreferences.getString("LastName", "Name");
+        UserName.setText(firstName+" "+LastName);
+
+        Amplify.Storage.downloadFile(
+                sharedPreferences.getString("Img","10"),
+                new File(getApplicationContext().getFilesDir() + sharedPreferences.getString("Img","10")),
+                result -> {
+                    System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
+                    userImage.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
+                    System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                },
+                error -> Log.e("MyAmplifyApp", "Download Failure", error)
+        );
+
 
 
     }

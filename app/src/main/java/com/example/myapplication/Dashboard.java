@@ -5,12 +5,15 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +36,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,7 +182,25 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
-        UserName.setText(com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername());
+        ImageView userImage=(ImageView) navigationView.getHeaderView(0).findViewById(R.id.use_image);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Dashboard.this);
+        //FullName
+        String firstName=sharedPreferences.getString("firstName", "user");
+        String LastName=sharedPreferences.getString("LastName", "Name");
+        UserName.setText(firstName+" "+LastName);
+
+                Amplify.Storage.downloadFile(
+                        sharedPreferences.getString("Img","10"),
+                        new File(getApplicationContext().getFilesDir() + sharedPreferences.getString("Img","10")),
+                        result -> {
+                            System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                            Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
+                            userImage.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
+                            System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                        },
+                        error -> Log.e("MyAmplifyApp", "Download Failure", error)
+                );
 
         RecyclerView recyclerView=findViewById(R.id.dashboardRecycleVeiw);
         recyclerView.setAdapter(new PinAdapter(taskList,this));

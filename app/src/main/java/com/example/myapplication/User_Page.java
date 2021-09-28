@@ -203,7 +203,25 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
-//        UserName.setText(getCurrentValue());
+        ImageView userImage=(ImageView) navigationView.getHeaderView(0).findViewById(R.id.use_image);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(User_Page.this);
+        //FullName
+        String firstName=sharedPreferences.getString("firstName", "user");
+        String LastName=sharedPreferences.getString("LastName", "Name");
+        UserName.setText(firstName+" "+LastName);
+
+        Amplify.Storage.downloadFile(
+                sharedPreferences.getString("Img","10"),
+                new File(getApplicationContext().getFilesDir() + sharedPreferences.getString("Img","10")),
+                result -> {
+                    System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
+                    userImage.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
+                    System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                },
+                error -> Log.e("MyAmplifyApp", "Download Failure", error)
+        );
 
         RecyclerView recyclerView=findViewById(R.id.dashboardRecycleVeiw);
         recyclerView.setAdapter(new PinAdapter(taskList,this));
