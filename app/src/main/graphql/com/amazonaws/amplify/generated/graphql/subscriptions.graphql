@@ -40,7 +40,6 @@ subscription OnCreateUser {
       items {
         id
         userID
-        title
         body
         isPrivate
         pinImg
@@ -104,7 +103,6 @@ subscription OnUpdateUser {
       items {
         id
         userID
-        title
         body
         isPrivate
         pinImg
@@ -168,7 +166,6 @@ subscription OnDeleteUser {
       items {
         id
         userID
-        title
         body
         isPrivate
         pinImg
@@ -221,7 +218,19 @@ subscription OnCreatePin {
       createdAt
       updatedAt
     }
-    title
+    place {
+      id
+      address
+      city
+      country
+      approxlat
+      approxlon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     body
     isPrivate
     pinImg
@@ -265,7 +274,19 @@ subscription OnUpdatePin {
       createdAt
       updatedAt
     }
-    title
+    place {
+      id
+      address
+      city
+      country
+      approxlat
+      approxlon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     body
     isPrivate
     pinImg
@@ -309,7 +330,19 @@ subscription OnDeletePin {
       createdAt
       updatedAt
     }
-    title
+    place {
+      id
+      address
+      city
+      country
+      approxlat
+      approxlon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     body
     isPrivate
     pinImg
@@ -544,6 +577,51 @@ subscription OnDeleteFollower {
       updatedAt
     }
     userFollower
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreatePlace {
+  onCreatePlace {
+    id
+    address
+    city
+    country
+    approxlat
+    approxlon
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdatePlace {
+  onUpdatePlace {
+    id
+    address
+    city
+    country
+    approxlat
+    approxlon
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeletePlace {
+  onDeletePlace {
+    id
+    address
+    city
+    country
+    approxlat
+    approxlon
     _version
     _deleted
     _lastChangedAt

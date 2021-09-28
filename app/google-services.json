@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "292777315286",
+    "project_id": "pinpoint-972f7",
+    "storage_bucket": "pinpoint-972f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292777315286:android:b35e4d99855605797cf277",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292777315286-se6a446mnp1v11gbmg28rfbtusinea85.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbkwCz7PbfnFP62scpjgcaZ51jvnPgQSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292777315286-se6a446mnp1v11gbmg28rfbtusinea85.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

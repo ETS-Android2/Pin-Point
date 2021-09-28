@@ -87,9 +87,12 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
                 ModelQuery.list(User.class),
                 response -> {
                     for (User user : response.getData()) {
-                        usersList.add(user);
-                        handler.sendEmptyMessage(1);
-                        Log.i("MyAmplifyApp", user.getFirstName());
+                        if (!getLoggedInUSer().equals(user.getUserName())){
+                            usersList.add(user);
+                            handler.sendEmptyMessage(1);
+                            Log.i("MyAmplifyApp", user.getFirstName());
+                        }
+                        
                     }
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
@@ -210,9 +213,13 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
-        UserName.setText(com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername());
+        UserName.setText(getLoggedInUSer());
 
 
+    }
+
+    String getLoggedInUSer() {
+        return com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
     }
 }
 
