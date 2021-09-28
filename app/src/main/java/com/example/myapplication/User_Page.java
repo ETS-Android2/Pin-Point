@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amplifyframework.auth.AuthUser;
@@ -36,6 +39,23 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
         setContentView(R.layout.activity_user_page);
         allNavationBarFunctions();
         buttonNavigationfun();
+        RelativeLayout followingFromProfile = findViewById(R.id.followingFromProfile);
+        followingFromProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(User_Page.this,Following.class);
+                startActivity(intent);
+            }
+        });
+
+        RelativeLayout followersFromProfile = findViewById(R.id.followersFromProfile);
+        followersFromProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(User_Page.this,Followers.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

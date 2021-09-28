@@ -113,6 +113,7 @@
                             app:cardElevation="10dp">
 
                             <RelativeLayout
+                                android:id="@+id/followingFromProfile"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="5dp">
@@ -154,16 +155,17 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="0dp"
                             android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:layout_marginBottom="40dp"
+                            android:layout_marginLeft="20dp"
                             android:layout_marginTop="40dp"
                             android:layout_marginRight="70dp"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginBottom="40dp"
+                            android:layout_weight="1"
                             android:background="#ff021f"
                             app:cardBackgroundColor="#ff021f"
                             app:cardElevation="15dp">
 
                             <RelativeLayout
+                                android:id="@+id/followersFromProfile"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="5dp">
