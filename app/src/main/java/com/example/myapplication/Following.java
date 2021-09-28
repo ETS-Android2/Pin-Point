@@ -3,15 +3,20 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
@@ -24,11 +29,17 @@ public class Following extends AppCompatActivity {
     List<User> users=new ArrayList<>();
     List<String> followingsIds = new ArrayList<>();
     User me;
+    Toolbar toolbar;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_following);
+        runToolBar();
+
+        TextView numberOfFollowers=findViewById(R.id.numberOfFollowering);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Following.this);
+        numberOfFollowers.setText(sharedPreferences.getString("following", "0"));
 
 
         RecyclerView allUsersRecyclerView = findViewById(R.id.followingRecycle);
@@ -86,7 +97,16 @@ public class Following extends AppCompatActivity {
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
     }
-
+    void runToolBar(){
+        toolbar = (Toolbar) findViewById(R.id.followingbar);
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24); // your drawable
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); // Implemented by activity
+            }
+        });
+    }
 
 
 }

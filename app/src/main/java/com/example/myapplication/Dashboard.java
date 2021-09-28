@@ -4,7 +4,10 @@ import android.app.ActionBar;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,9 +24,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Pin;
+import com.amplifyframework.datastore.generated.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -37,12 +43,43 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
      BottomNavigationView bottomNavigationView;
      Toolbar toolbar;
      List<Pin> taskList=new ArrayList();
+     User me;
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         allNavationBarFunctions();
         buttonNavigationfun();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Dashboard.this);
+        SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
+//        String userName = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
+        String userName = sharedPreferences.getString("userName","  ");
+        Amplify.API.query(
+                ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
+                response -> {
+                    Log.i("MyAmplifyApp", response.getData().toString());
+                    for (User user : response.getData()) {
+                        me =user;
+                        System.out.println("mmmmmmmm"+me.getFirstName());
+                        Log.i("MyAmplifyApp", "hh");
+
+                    }
+
+                        sharedEditor.putString("Id", me.getId());
+                        sharedEditor.putString("firstName",me.getFirstName());
+                        sharedEditor.putString("bio", me.getBio());
+                        sharedEditor.putString("Img", me.getImg());
+                        sharedEditor.putString("LastName", me.getLastName());
+                        sharedEditor.putString("followers", String.valueOf(me.getFollowers().size()));
+                        sharedEditor.putString("following", String.valueOf(me.getFollowings().size()));
+
+                    sharedEditor.apply();
+
+                        System.out.println("zzzzzzzzzz"+me.getImg());
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
     }
 
 
@@ -65,9 +102,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
             case R.id.nav_logout:
                 logout();
-                break;
-            case R.id.nav_discover:
-                goToDicover();
                 break;
             case R.id.nav_profile:
                 goToProfile();

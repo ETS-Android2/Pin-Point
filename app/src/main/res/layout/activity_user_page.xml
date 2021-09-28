@@ -79,7 +79,7 @@
                             android:textSize="24dp" />
 
                         <TextView
-                            android:id="@+id/user_name"
+                            android:id="@+id/bio_user_page"
                             android:layout_width="174dp"
                             android:layout_height="40dp"
                             android:layout_below="@+id/full_name"

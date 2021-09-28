@@ -11,19 +11,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Pin;
+import com.amplifyframework.datastore.generated.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +40,38 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
     List<Pin> taskList=new ArrayList();
+    User me;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_page);
+        TextView followers=findViewById(R.id.followers);
+        TextView following=findViewById(R.id.following);
+        TextView fullName=findViewById(R.id.full_name);
+        TextView bio=findViewById(R.id.bio_user_page);
+        ImageView userImage=findViewById(R.id.usepage_image);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(User_Page.this);
+        followers.setText(sharedPreferences.getString("followers", "0"));
+        following.setText(sharedPreferences.getString("following","10"));
+        //FullName
+        String firstName=sharedPreferences.getString("firstName", "user");
+        String LastName=sharedPreferences.getString("LastName", "Name");
+        fullName.setText(firstName+" "+LastName);
+        //Bio
+        bio.setText(sharedPreferences.getString("bio","10"));
+        //img
+        Amplify.Storage.downloadFile(
+                sharedPreferences.getString("Img","10"),
+                new File(getApplicationContext().getFilesDir() + sharedPreferences.getString("Img","10")),
+                result -> {
+                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
+                    userImage.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
+                    System.out.println(sharedPreferences.getString("Img","10"));
+                },
+                error -> Log.e("MyAmplifyApp", "Download Failure", error)
+        );
+
         allNavationBarFunctions();
         buttonNavigationfun();
         RelativeLayout followingFromProfile = findViewById(R.id.followingFromProfile);
@@ -58,26 +93,23 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
-            Intent a = new Intent(Intent.ACTION_MAIN);
-            a.addCategory(Intent.CATEGORY_HOME);
-            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(a);
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//        }else {
+//            Intent a = new Intent(Intent.ACTION_MAIN);
+//            a.addCategory(Intent.CATEGORY_HOME);
+//            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(a);
+//        }
+//    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_logout:
                 logout();
-                break;
-            case R.id.nav_discover:
-                goToDicover();
                 break;
             case R.id.nav_profile:
                 goToProfile();
@@ -93,6 +125,9 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
                 break;
             case R.id.profile_butt:
                 goToProfile();
+                break;
+            case R.id.pin_butt:
+                goToPin();
                 break;
         }
 
@@ -112,13 +147,13 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
         );
     }
 
-    public String getCurrentValue(){
-        AuthUser authUser=Amplify.Auth.getCurrentUser();
-        Log.e("getCurrentUser", authUser.toString());
-        Log.e("getCurrentUser", authUser.getUserId());
-        Log.e("getCurrentUser", authUser.getUsername());
-        return authUser.getUsername();
-    }
+//    public String getCurrentValue(){
+//        AuthUser authUser=Amplify.Auth.getCurrentUser();
+//        Log.e("getCurrentUser", authUser.toString());
+//        Log.e("getCurrentUser", authUser.getUserId());
+//        Log.e("getCurrentUser", authUser.getUsername());
+//        return authUser.getUsername();
+//    }
     public void goToProfile(){
         Intent gotoProfile=new Intent(User_Page.this,User_Page.class);
         startActivity(gotoProfile);
@@ -131,6 +166,21 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
     public void goToHome(){
         Intent goToHome=new Intent(User_Page.this,Dashboard.class);
         startActivity(goToHome);
+    }
+    public void goToPin(){
+        Intent gotoDiscoverPage=new Intent(User_Page.this,NewPin.class);
+        startActivity(gotoDiscoverPage);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            Intent a = new Intent(User_Page.this,Dashboard.class);
+            startActivity(a);
+
+        }
     }
 
 
@@ -153,7 +203,7 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
-        UserName.setText(getCurrentValue());
+//        UserName.setText(getCurrentValue());
 
         RecyclerView recyclerView=findViewById(R.id.dashboardRecycleVeiw);
         recyclerView.setAdapter(new PinAdapter(taskList,this));
@@ -167,4 +217,5 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
         bottomNavigationView.setSelectedItemId(R.id.profile_butt);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
+
 }

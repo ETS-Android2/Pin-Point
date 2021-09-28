@@ -40,7 +40,7 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
     DiscoverAdapter discoverAdapter;
     RecyclerView recyclerView;
     Dashboard dashboard = new Dashboard();
-    List<User> usersList = new ArrayList<>();
+    List<User> usersList;
     DrawerLayout drawerLayout;
     BottomNavigationView bottomNavigationView;
     NavigationView navigationView;
@@ -59,6 +59,7 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
     protected void onStart() {
         super.onStart();
         gettingUsers();
+        usersList = new ArrayList<>();
         recyclerView = findViewById(R.id.discoverRecycleVeiw);
         recyclerView.setAdapter(new DiscoverAdapter(usersList, this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -73,6 +74,7 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
 //
 //
 //    }
+
 
     Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
         @Override
@@ -126,9 +128,9 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_logout:
                 logout();
                 break;
-            case R.id.nav_discover:
-                goToDicover();
-                break;
+//            case R.id.nav_discover:
+//                goToDicover();
+//                break;
             case R.id.nav_profile:
                 goToProfile();
                 break;
@@ -139,9 +141,13 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
                 goToHome();
                 break;
             case R.id.discove_butt:
+                goToDicover();
                 break;
             case R.id.profile_butt:
                 goToProfile();
+                break;
+            case R.id.pin_butt:
+                goToPin();
                 break;
 
         }
@@ -183,6 +189,21 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
     public void goToHome() {
         Intent goToHome = new Intent(Discover.this, Dashboard.class);
         startActivity(goToHome);
+    }
+    public void goToPin(){
+        Intent gotoDiscoverPage=new Intent(Discover.this,NewPin.class);
+        startActivity(gotoDiscoverPage);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            Intent a = new Intent(Discover.this,Dashboard.class);
+            startActivity(a);
+
+        }
     }
 
     public void buttonNavigationfun() {
