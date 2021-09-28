@@ -1,10 +1,10 @@
 package com.example.myapplication;
 
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,16 +24,16 @@ import com.amplifyframework.datastore.generated.model.Follower;
 import com.amplifyframework.datastore.generated.model.Following;
 import com.amplifyframework.datastore.generated.model.User;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVeiwHolder> {
 
-    List<User> users=new ArrayList<User>();
+    List<User> users = new ArrayList<User>();
     Context context;
-    static User  meUser;
-
+    static User meUser;
 
 
     public DiscoverAdapter(List<User> users, Context context) {
@@ -48,43 +48,17 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
 
         public UserVeiwHolder(@NonNull View itemView) {
             super(itemView);
-            this.itemView=itemView;
+            this.itemView = itemView;
             Button follow = itemView.findViewById(R.id.followButtonFragmentId);
             Button unfollow = itemView.findViewById(R.id.unfollowButtonFragmentId);
 
-            String userName=com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
-            Amplify.API.query(
-                    ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
-                    response -> {
-                        for (User x : response.getData()) {
-                            meUser=x;
-                            Log.i("TestUser", meUser.getFollowings().toString());
-                        }
-                        Log.i("TestUser", String.valueOf(!meUser.getFollowings().isEmpty()));
-
-                        follow.setVisibility(View.VISIBLE);
-                        unfollow.setVisibility(View.INVISIBLE);
-                        if(!meUser.getFollowings().isEmpty()){
-                            for (Following following : meUser.getFollowings()) {
-                                if (following.getUserFollowing().equals(user.getId())) {
-                                    unfollow.setVisibility(View.VISIBLE);
-                                    follow.setVisibility(View.INVISIBLE);
-                                } else {
-                                    follow.setVisibility(View.VISIBLE);
-                                    unfollow.setVisibility(View.INVISIBLE);
-                                }
-                            }
-                        }
-                    },
-                    error -> Log.e("MyAmplifyApp", "Query failure", error)
-            );
 
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                   User userCopy=meUser.copyOfBuilder().
-                    Following followingUser=Following.builder().user(meUser).userFollowing(user.getId()).build();
-                    Follower followerUser=Follower.builder().user(user).userFollower(meUser.getId()).build();
+                    Following followingUser = Following.builder().user(meUser).userFollowing(user.getId()).build();
+                    Follower followerUser = Follower.builder().user(user).userFollower(meUser.getId()).build();
                     Amplify.API.mutate(ModelMutation.create(followingUser),
                             response1 -> Log.i("following", "following with id: " + response1.getData().getId()),
                             error -> Log.e("following", "Create failed", error)
@@ -113,8 +87,8 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
     @NonNull
     @Override
     public UserVeiwHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_discover,parent,false);
-        UserVeiwHolder taskVeiwHolder=new UserVeiwHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_discover, parent, false);
+        UserVeiwHolder taskVeiwHolder = new UserVeiwHolder(view);
         return taskVeiwHolder;
     }
 
@@ -123,8 +97,53 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
     public void onBindViewHolder(@NonNull UserVeiwHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.user = users.get(position);
-        TextView taskTitle = holder.itemView.findViewById(R.id.use_name_name);
-        taskTitle.setText(holder.user.getFirstName()+" "+ holder.user.getLastName());
+        TextView taskTitle = holder.itemView.findViewById(R.id.nameOfUser);
+        taskTitle.setText(holder.user.getFirstName() + " " + holder.user.getLastName());
+
+        Button follow = holder.itemView.findViewById(R.id.followButtonFragmentId);
+        Button unfollow = holder.itemView.findViewById(R.id.unfollowButtonFragmentId);
+
+        Amplify.Storage.downloadFile(
+                holder.user.getImg(),
+                new File(context.getApplicationContext().getFilesDir() + holder.user.getImg()),
+                result -> {
+                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
+                    ImageView image = holder.itemView.findViewById(R.id.use_image);
+                    // https://stackoverflow.com/questions/19172154/convert-a-file-object-to-bitmap
+                    image.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
+                    //https://github.com/bumptech/glide
+//                    Glide.with(TaskDetailPage.this).load(result.getFile().getPath()).centerCrop().into(image);
+                },
+                error -> Log.e("MyAmplifyApp", "Download Failure", error)
+        );
+
+        String userName = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
+        Amplify.API.query(
+                ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
+                response -> {
+                    for (User x : response.getData()) {
+                        meUser = x;
+                        Log.i("TestUser", meUser.getFollowings().toString());
+                    }
+                    Log.i("TestUser", String.valueOf(!meUser.getFollowings().isEmpty()));
+
+//                        follow.setVisibility(View.VISIBLE);
+//                        unfollow.setVisibility(View.INVISIBLE);
+                    if (!meUser.getFollowings().isEmpty()) {
+                        for (Following following : meUser.getFollowings()) {
+                            if (following.getUserFollowing().equals(holder.user.getId())) {
+                                follow.setVisibility(View.INVISIBLE);
+//                                unfollow.setVisibility(View.VISIBLE);
+//                                unfollow.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }
+//                    else{
+////                        unfollow.setVisibility(View.INVISIBLE);
+//                    }
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
 
         //        holder.taskModel=pins.get(position);
 //        ImageView map=holder.itemView.findViewById(R.id.map_id);
@@ -155,24 +174,25 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
 //
     }
 
-public static User getMyUser(){
-        ArrayList <User>meUserList=new ArrayList<>();
+    public static User getMyUser() {
+        ArrayList<User> meUserList = new ArrayList<>();
 
-    String userName=com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
-    Amplify.API.query(
-            ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
-            response -> {
-                for (User user : response.getData()) {
-                    meUserList.add(user);
-                    Log.i("MyAmplifyApp","hh");
-                }
-            },
-            error -> Log.e("MyAmplifyApp", "Query failure", error)
-    );
-    Log.i("GetUser",meUserList.get(0).getUserName());
+        String userName = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
+        Amplify.API.query(
+                ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
+                response -> {
+                    for (User user : response.getData()) {
+                        meUserList.add(user);
+                        Log.i("MyAmplifyApp", "hh");
+                    }
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
+        Log.i("GetUser", meUserList.get(0).getUserName());
 
-    return meUserList.get(0);
-}
+        return meUserList.get(0);
+    }
+
     @Override
     public int getItemCount() {
         return users.size();
