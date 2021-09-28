@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".NewPin"
+            android:exported="true" />
+        <activity
+            android:name=".test"
+            android:exported="true" />
+        <activity
             android:name=".CompleteRegistration"
             android:exported="true" />
         <activity android:name=".Following" />
@@ -41,7 +47,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,4 +58,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

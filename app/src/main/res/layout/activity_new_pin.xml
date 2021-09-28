@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewPin">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/posttoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginBottom="17dp"
+        android:background="#f5f5f5"
+        android:elevation="10dp"
+        android:isScrollContainer="true"
+        android:minHeight="?attr/actionBarSize"
+        android:padding="2dp"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_reply_24"
+        app:title="           New Pin"
+        app:titleMarginEnd="60dp">
+
+        <Button
+            android:id="@+id/submit_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:backgroundTint="#00000000"
+            app:icon="@drawable/ic_baseline_pin_drop_24"
+            android:text="post"
+            app:cornerRadius="30dp"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Login"
+        android:orientation="vertical"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:backgroundTint="@android:color/background_dark"
+            android:id="@+id/post_text_primary"
+            app:startIconDrawable="@drawable/ic_baseline_edit_24"
+            android:hint="Write your memories ..."
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:counterEnabled="true"
+            app:counterMaxLength="1000"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/postInput"
+                android:layout_width="match_parent"
+                android:layout_height="165dp"
+                app:backgroundTint="@android:color/background_dark" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/post_Image"
+                android:layout_width="181dp"
+                android:layout_height="65dp"
+                android:background="#00000000"
+                android:padding="15dp"
+                android:text="Select Image"
+                android:textAllCaps="false"
+                android:textColor="#DA0037"
+                app:icon="@drawable/ic_baseline_image_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+            </Button>
+
+            <TextView
+                android:id="@+id/post_ImageName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Image Selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.325"
+                app:layout_constraintStart_toEndOf="@+id/post_Image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
