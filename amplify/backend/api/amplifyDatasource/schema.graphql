@@ -16,10 +16,11 @@ type Pin @model
     id: ID!
     userID: ID!
     user:User @connection(fields: ["userID"])
-    title: String!
+    placeID: ID!
+    place: Place @connection(fields: ["placeID"])
     body: String
     isPrivate:Boolean
-    pinImg: String
+    pinImg: [String]
     lat:Float
     lon:Float
     locatName:String
@@ -39,4 +40,13 @@ type Follower @model
     userID: ID!
     user:User @connection(fields: ["userID"])
     userFollower:String
+}
+
+type Place @model {
+    id: ID!
+    address: String!
+    city: String
+    country: String
+    approxlat:Float
+    approxlon:Float
 }
