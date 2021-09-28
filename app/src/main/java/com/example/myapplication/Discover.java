@@ -19,6 +19,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amplifyframework.auth.AuthUser;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
+
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,6 +57,31 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
         recyclerView=findViewById(R.id.discoverRecycleVeiw);
         recyclerView.setAdapter(new DiscoverAdapter(usersList,this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        gettingUsers();
+
+
+    }
+
+        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message msg) {
+                recyclerView.getAdapter().notifyDataSetChanged();
+                return false;
+            }
+        });
+
+    public void gettingUsers(){
+      Amplify.API.query(
+              ModelQuery.list(User.class),
+    response -> {
+        for (User user : response.getData()) {
+            usersList.add(user);
+            handler.sendEmptyMessage(1);
+            Log.i("MyAmplifyApp", user.getFirstName());
+        }
+    },
+    error -> Log.e("MyAmplifyApp", "Query failure", error)
+            );
     }
 
 //    public void searchBarFunc(){

@@ -19,7 +19,7 @@ query SyncUsers(
       bio
       email
       img
-      following {
+      followings {
         nextToken
         startedAt
       }
@@ -50,15 +50,11 @@ query GetUser($id: ID!) {
     bio
     email
     img
-    following {
+    followings {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
+        userFollowing
         _version
         _deleted
         _lastChangedAt
@@ -71,12 +67,8 @@ query GetUser($id: ID!) {
     followers {
       items {
         id
-        userName
-        firstName
-        lastName
-        bio
-        email
-        img
+        userID
+        userFollower
         _version
         _deleted
         _lastChangedAt
@@ -127,7 +119,7 @@ query ListUsers(
       bio
       email
       img
-      following {
+      followings {
         nextToken
         startedAt
       }
@@ -164,6 +156,20 @@ query SyncPins(
     items {
       id
       userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
       title
       body
       isPrivate
@@ -185,6 +191,32 @@ query GetPin($id: ID!) {
   getPin(id: $id) {
     id
     userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     title
     body
     isPrivate
@@ -204,6 +236,20 @@ query ListPins($filter: ModelPinFilterInput, $limit: Int, $nextToken: String) {
     items {
       id
       userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
       title
       body
       isPrivate
@@ -211,6 +257,230 @@ query ListPins($filter: ModelPinFilterInput, $limit: Int, $nextToken: String) {
       lat
       lon
       locatName
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncFollowings(
+  $filter: ModelFollowingFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncFollowings(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      userFollowing
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetFollowing($id: ID!) {
+  getFollowing(id: $id) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    userFollowing
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListFollowings(
+  $filter: ModelFollowingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listFollowings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      userFollowing
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncFollowers(
+  $filter: ModelFollowerFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncFollowers(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      userFollower
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetFollower($id: ID!) {
+  getFollower(id: $id) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    userFollower
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListFollowers(
+  $filter: ModelFollowerFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listFollowers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      userFollower
       _version
       _deleted
       _lastChangedAt
