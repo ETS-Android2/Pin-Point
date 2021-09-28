@@ -106,7 +106,6 @@ public class CompleteRegistration extends AppCompatActivity {
                     Intent goToMain = new Intent(CompleteRegistration.this, Dashboard.class);
                     startActivity(goToMain);
                     finish();
-
                 },
                 error -> Log.e("CompleteRegistration", "Create failed", error)
         );

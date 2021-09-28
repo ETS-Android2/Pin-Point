@@ -3,12 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.2203125" />
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2203125" />
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.2203125" />
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/drawable/search_bg.xml" value="0.2203125" />
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/font/.xml" value="0.23076923076923078" />
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_complete_registration.xml" value="0.22" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_confirm_new_password.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_dashboard.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_discover.xml" value="0.22" />
@@ -17,10 +11,7 @@
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_forget_password_name.xml" value="0.22" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_new_pin.xml" value="0.22" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_signup.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_test.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_test2.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_user_page.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/activity_verfication.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/fragment_blank.xml" value="0.25" />
@@ -31,8 +22,9 @@
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/layout/main_fragment.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/menu/buttom_navagation_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/menu/main_menu.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2203125" />
         <entry key="..\:/Users/baraa/AndroidStudioProjects/finalpro/Pin-Point/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.21203703703703702" />
+        <entry key="app/src/main/res/layout/activity_complete_registration.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/layout/fragment_discover.xml" value="0.7391841779975278" />
       </map>
     </option>
   </component>
