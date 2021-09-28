@@ -10,6 +10,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,6 +19,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
@@ -27,9 +29,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Pin;
 import com.amplifyframework.datastore.generated.model.Place;
+import com.amplifyframework.datastore.generated.model.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -63,6 +68,8 @@ public class NewPin extends AppCompatActivity {
     Uri dataUri;
     File file;
     String fileName;
+    String userId;
+    User meUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +78,9 @@ public class NewPin extends AppCompatActivity {
         runToolBar();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(NewPin.this);
+        SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
+        userId = sharedPreferences.getString("Id","  ");
 
         pinBody = findViewById(R.id.postInput);
         imagesBtn = findViewById(R.id.post_Image);
@@ -79,6 +88,7 @@ public class NewPin extends AppCompatActivity {
         privacySwitch = findViewById(R.id.simpleSwitch);
 //        Log.i("GO", isGooglePlayServicesAvailable());
         imagesBtn.setOnClickListener(view -> pickFile());
+        pinItBtn.setOnClickListener(view -> createNewPin());
     }
 
     void runToolBar() {
@@ -186,8 +196,22 @@ public class NewPin extends AppCompatActivity {
 //        Longitude: 1 deg = 111.320*cos(latitude) km
         double approxLat = latitude - (5 / 110.574);
         double approxLon = longitude - (5 / 111.320 * Math.cos(latitude));
-        Place newPlace = Place.builder().address(cityNameStorage + ", " + countryNameStorage).city(cityNameStorage).country(countryNameStorage).approxlat(approxLat).approxlon(approxLon).build();
-//        Pin newPin = Pin.builder().place(newPlace).body(pinBody.getText().toString()).lat(latitude).lon(longitude).locatName(cityNameStorage + ", " + countryNameStorage).user().pinImg(imageUris).isPrivate(privacySwitch.isChecked()).build();
+        Amplify.API.query(
+                ModelQuery.get(User.class,userId),
+                response -> {
+                    meUser= response.getData();
+                    Place newPlace = Place.builder().address(cityNameStorage + ", " + countryNameStorage).city(cityNameStorage).country(countryNameStorage).approxlat(approxLat).approxlon(approxLon).build();
+                    Pin newPin = Pin.builder().place(newPlace).body(pinBody.getText().toString()).lat(latitude).lon(longitude).locatName(cityNameStorage + ", " + countryNameStorage).user(meUser).pinImg(imageUris).isPrivate(privacySwitch.isChecked()).build();
+                    Amplify.API.mutate(
+                            ModelMutation.create(newPin),
+                            response1 -> Log.i("CreatePin", "Added Todo with id: " + response1.getData().getLocatName()),
+                            error -> Log.e("CreatePin", "Create failed", error)
+                    );
+
+                },
+                error -> Log.e("MyAmplifyApp", "Team Query failure", error)
+        );
+
     }
 
     @Override
@@ -207,7 +231,7 @@ public class NewPin extends AppCompatActivity {
                 Log.i("0000000000",fileName);
 //                String imageString = dataUri.toString();
                 imageUris.add(fileName);
-
+                Log.i("IMAGE", "Successfully uploaded: " + fileName);
                 try {
                     InputStream exampleInputStream = getContentResolver().openInputStream(dataUri);
                     Amplify.Storage.uploadInputStream(
@@ -233,7 +257,6 @@ public class NewPin extends AppCompatActivity {
             fileName = file.getName();
             imageUris.add(fileName);
             Log.i("0000000000", "single image "+ imageUris);
-
         }
 
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -254,4 +277,5 @@ public class NewPin extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1234);
 
     }
+
 }

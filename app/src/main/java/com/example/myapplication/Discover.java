@@ -50,6 +50,7 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
     BottomNavigationView bottomNavigationView;
     NavigationView navigationView;
     Toolbar toolbar;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,9 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
 //        RecyleView();
         allNavationBarFunctions();
         buttonNavigationfun();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Discover.this);
+        SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
+        userName = sharedPreferences.getString("userName","  ");
     }
 
     @Override
@@ -94,9 +98,11 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
                 ModelQuery.list(User.class),
                 response -> {
                     for (User user : response.getData()) {
-                        usersList.add(user);
-                        handler.sendEmptyMessage(1);
-                        Log.i("MyAmplifyApp", user.getFirstName());
+                        if (!userName.equals(user.getUserName())){
+                            usersList.add(user);
+                            handler.sendEmptyMessage(1);
+                            Log.i("MyAmplifyApp", user.getFirstName());
+                        }
                     }
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
