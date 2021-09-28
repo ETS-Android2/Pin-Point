@@ -17,6 +17,12 @@
         app:menu="@menu/main_menu"
         android:maxWidth="230dp"
         android:layout_gravity="start" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="200dp">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     <ScrollView
@@ -28,6 +34,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFFFFF">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar3"
+                android:layout_width="371dp"
+                android:layout_height="54dp"
+                android:background="@color/white"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintBottom_toTopOf="@+id/newone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:navigationIcon="@drawable/icon" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/newone"
@@ -50,15 +71,13 @@
                         android:layout_width="422dp"
                         android:layout_height="200dp"
                         android:background="@drawable/background2"
-                        android:paddingLeft="40dp"
-                        android:paddingRight="40dp"
-                        android:paddingTop="40dp"
-                        android:paddingBottom="40dp">
+                        android:padding="70dp">
 
                         <com.mikhaellopez.circularimageview.CircularImageView
                             android:id="@+id/usepage_image"
-                            android:layout_width="104dp"
-                            android:layout_height="104dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_centerVertical="true"
                             android:src="@drawable/photo_1529665253569_6d01c0eaf7b6"
                             app:civ_border_color="@color/white"
                             app:civ_border_width="2dp" />
@@ -67,29 +86,27 @@
                             android:id="@+id/full_name"
                             android:layout_width="174dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginLeft="11dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="13dp"
                             android:layout_toRightOf="@+id/usepage_image"
                             android:fontFamily="@font/baloo"
                             android:includeFontPadding="false"
                             android:text="user name"
                             android:textColor="@color/white"
-                            android:textSize="24dp" />
+                            android:textSize="20dp" />
 
                         <TextView
                             android:id="@+id/user_name"
                             android:layout_width="174dp"
                             android:layout_height="40dp"
                             android:layout_below="@+id/full_name"
-                            android:layout_marginLeft="11dp"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginLeft="13dp"
+                            android:layout_marginTop="3dp"
                             android:layout_toRightOf="@+id/usepage_image"
                             android:fontFamily="@font/baloo"
                             android:includeFontPadding="false"
                             android:text="user name"
                             android:textColor="@color/white"
-                            android:textSize="16dp" />
+                            android:textSize="14dp" />
 
 
                     </RelativeLayout>
@@ -102,13 +119,10 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="0dp"
-                            android:layout_height="100dp"
+                            android:layout_height="125dp"
+                            android:layout_margin="40dp"
                             android:layout_weight="1"
                             android:background="#ff021f"
-                            android:layout_marginBottom="40dp"
-                            android:layout_marginTop="40dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="5dp"
                             app:cardBackgroundColor="#ff021f"
                             app:cardElevation="10dp">
 
@@ -153,12 +167,9 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="0dp"
-                            android:layout_height="100dp"
+                            android:layout_height="125dp"
+                            android:layout_margin="40dp"
                             android:layout_weight="1"
-                            android:layout_marginBottom="40dp"
-                            android:layout_marginTop="40dp"
-                            android:layout_marginRight="70dp"
-                            android:layout_marginLeft="20dp"
                             android:background="#ff021f"
                             app:cardBackgroundColor="#ff021f"
                             app:cardElevation="15dp">
@@ -209,29 +220,27 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:padding="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/dashboardRecycleVeiw"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newone">
+                app:layout_constraintTop_toBottomOf="@+id/newone"
+                android:padding="10dp">
 
                 <EditText
                     android:id="@+id/search_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/search_bg"
                     android:drawableStart="@drawable/ic_baseline_search_24"
                     android:hint="Search..."
-                    android:padding="10dp"
-                    android:paddingStart="16dp"
-                    android:textSize="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintVertical_bias="1.0"
+                    android:paddingStart="16dp"
+                    android:padding="10dp"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -245,60 +254,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
                 app:layout_constraintVertical_bias="1.0">
 
             </androidx.recyclerview.widget.RecyclerView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:layout_alignParentBottom="true">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar3"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginBottom="17dp"
-            android:background="#f5f5f5"
-            android:elevation="10dp"
-            android:isScrollContainer="true"
-            android:minHeight="?attr/actionBarSize"
-            android:padding="2dp"
-            android:theme="?attr/actionBarTheme"
-            app:collapseIcon="@drawable/projectpic5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:logo="@drawable/finallogo"
-            app:navigationIcon="@drawable/icon"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-            app:title="                 n">
-
-        </androidx.appcompat.widget.Toolbar>
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/footer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:layout_alignParentBottom="true">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/butt_nav_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="400dp"
-            android:background="#f5f5f5"
-            android:elevation="10dp"
-            app:menu="@menu/buttom_navagation_menu"/>
-
-    </RelativeLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

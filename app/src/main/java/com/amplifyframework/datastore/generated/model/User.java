@@ -29,8 +29,6 @@ public final class User implements Model {
   public static final QueryField BIO = field("User", "bio");
   public static final QueryField EMAIL = field("User", "email");
   public static final QueryField IMG = field("User", "img");
-  public static final QueryField USER_FOLLOWING_ID = field("User", "userFollowingId");
-  public static final QueryField USER_FOLLOWERS_ID = field("User", "userFollowersId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String userName;
   private final @ModelField(targetType="String") String firstName;
@@ -38,13 +36,11 @@ public final class User implements Model {
   private final @ModelField(targetType="String") String bio;
   private final @ModelField(targetType="String") String email;
   private final @ModelField(targetType="String") String img;
-  private final @ModelField(targetType="User") @HasMany(associatedWith = "userFollowingId", type = User.class) List<User> following = null;
-  private final @ModelField(targetType="User") @HasMany(associatedWith = "userFollowersId", type = User.class) List<User> followers = null;
-  private final @ModelField(targetType="Pin") @HasMany(associatedWith = "userID", type = Pin.class) List<Pin> Pins = null;
+  private final @ModelField(targetType="Following") @HasMany(associatedWith = "user", type = Following.class) List<Following> followings = null;
+  private final @ModelField(targetType="Follower") @HasMany(associatedWith = "user", type = Follower.class) List<Follower> followers = null;
+  private final @ModelField(targetType="Pin") @HasMany(associatedWith = "user", type = Pin.class) List<Pin> Pins = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
-  private final @ModelField(targetType="ID") String userFollowingId;
-  private final @ModelField(targetType="ID") String userFollowersId;
   public String getId() {
       return id;
   }
@@ -73,11 +69,11 @@ public final class User implements Model {
       return img;
   }
   
-  public List<User> getFollowing() {
-      return following;
+  public List<Following> getFollowings() {
+      return followings;
   }
   
-  public List<User> getFollowers() {
+  public List<Follower> getFollowers() {
       return followers;
   }
   
@@ -93,15 +89,7 @@ public final class User implements Model {
       return updatedAt;
   }
   
-  public String getUserFollowingId() {
-      return userFollowingId;
-  }
-  
-  public String getUserFollowersId() {
-      return userFollowersId;
-  }
-  
-  private User(String id, String userName, String firstName, String lastName, String bio, String email, String img, String userFollowingId, String userFollowersId) {
+  private User(String id, String userName, String firstName, String lastName, String bio, String email, String img) {
     this.id = id;
     this.userName = userName;
     this.firstName = firstName;
@@ -109,8 +97,6 @@ public final class User implements Model {
     this.bio = bio;
     this.email = email;
     this.img = img;
-    this.userFollowingId = userFollowingId;
-    this.userFollowersId = userFollowersId;
   }
   
   @Override
@@ -129,9 +115,7 @@ public final class User implements Model {
               ObjectsCompat.equals(getEmail(), user.getEmail()) &&
               ObjectsCompat.equals(getImg(), user.getImg()) &&
               ObjectsCompat.equals(getCreatedAt(), user.getCreatedAt()) &&
-              ObjectsCompat.equals(getUpdatedAt(), user.getUpdatedAt()) &&
-              ObjectsCompat.equals(getUserFollowingId(), user.getUserFollowingId()) &&
-              ObjectsCompat.equals(getUserFollowersId(), user.getUserFollowersId());
+              ObjectsCompat.equals(getUpdatedAt(), user.getUpdatedAt());
       }
   }
   
@@ -147,8 +131,6 @@ public final class User implements Model {
       .append(getImg())
       .append(getCreatedAt())
       .append(getUpdatedAt())
-      .append(getUserFollowingId())
-      .append(getUserFollowersId())
       .toString()
       .hashCode();
   }
@@ -165,9 +147,7 @@ public final class User implements Model {
       .append("email=" + String.valueOf(getEmail()) + ", ")
       .append("img=" + String.valueOf(getImg()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
-      .append("updatedAt=" + String.valueOf(getUpdatedAt()) + ", ")
-      .append("userFollowingId=" + String.valueOf(getUserFollowingId()) + ", ")
-      .append("userFollowersId=" + String.valueOf(getUserFollowersId()))
+      .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
       .toString();
   }
@@ -202,8 +182,6 @@ public final class User implements Model {
       null,
       null,
       null,
-      null,
-      null,
       null
     );
   }
@@ -215,9 +193,7 @@ public final class User implements Model {
       lastName,
       bio,
       email,
-      img,
-      userFollowingId,
-      userFollowersId);
+      img);
   }
   public interface BuildStep {
     User build();
@@ -228,8 +204,6 @@ public final class User implements Model {
     BuildStep bio(String bio);
     BuildStep email(String email);
     BuildStep img(String img);
-    BuildStep userFollowingId(String userFollowingId);
-    BuildStep userFollowersId(String userFollowersId);
   }
   
 
@@ -241,8 +215,6 @@ public final class User implements Model {
     private String bio;
     private String email;
     private String img;
-    private String userFollowingId;
-    private String userFollowersId;
     @Override
      public User build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -254,9 +226,7 @@ public final class User implements Model {
           lastName,
           bio,
           email,
-          img,
-          userFollowingId,
-          userFollowersId);
+          img);
     }
     
     @Override
@@ -295,18 +265,6 @@ public final class User implements Model {
         return this;
     }
     
-    @Override
-     public BuildStep userFollowingId(String userFollowingId) {
-        this.userFollowingId = userFollowingId;
-        return this;
-    }
-    
-    @Override
-     public BuildStep userFollowersId(String userFollowersId) {
-        this.userFollowersId = userFollowersId;
-        return this;
-    }
-    
     /** 
      * @param id id
      * @return Current Builder instance, for fluent method chaining
@@ -319,16 +277,14 @@ public final class User implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String userName, String firstName, String lastName, String bio, String email, String img, String userFollowingId, String userFollowersId) {
+    private CopyOfBuilder(String id, String userName, String firstName, String lastName, String bio, String email, String img) {
       super.id(id);
       super.userName(userName)
         .firstName(firstName)
         .lastName(lastName)
         .bio(bio)
         .email(email)
-        .img(img)
-        .userFollowingId(userFollowingId)
-        .userFollowersId(userFollowersId);
+        .img(img);
     }
     
     @Override
@@ -359,16 +315,6 @@ public final class User implements Model {
     @Override
      public CopyOfBuilder img(String img) {
       return (CopyOfBuilder) super.img(img);
-    }
-    
-    @Override
-     public CopyOfBuilder userFollowingId(String userFollowingId) {
-      return (CopyOfBuilder) super.userFollowingId(userFollowingId);
-    }
-    
-    @Override
-     public CopyOfBuilder userFollowersId(String userFollowersId) {
-      return (CopyOfBuilder) super.userFollowersId(userFollowersId);
     }
   }
   

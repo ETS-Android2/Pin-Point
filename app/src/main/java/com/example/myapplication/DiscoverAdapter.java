@@ -7,6 +7,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,16 +19,20 @@ import com.amplifyframework.datastore.generated.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVeiwHolder> {
 
     List<User> users=new ArrayList<User>();
+    List<User> filterdata;
     Context context;
 
     public DiscoverAdapter(List<User> users, Context context) {
         this.users = users;
         this.context = context;
+//        this.filterdata=users;
+
     }
 
     public static class UserVeiwHolder extends RecyclerView.ViewHolder {
@@ -38,7 +43,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
         public UserVeiwHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView=itemView;
-//            mainLayout=itemView.findViewById(R.id.pin_original);
         }
     }
 
@@ -85,5 +89,40 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
     public int getItemCount() {
         return 10;
     }
+//    @Override
+//    public int getItemCount() {
+//        return filterdata.size();
+//    }
+//    //Start filter
+//    public Filter getFliter(){
+//        return new Filter() {
+//            @Override
+//            protected FilterResults performFiltering(CharSequence charSequence) {
+//                String Key=charSequence.toString();
+//                if(Key.isEmpty()){
+//                    filterdata=users;
+//                }else {
+//                    List<User>firstFilter=new ArrayList<>();
+//                    for(User row:users){
+//                        if(row.getUserName().toLowerCase().contains(Key.toLowerCase())){
+//                            firstFilter.add(row);
+//                        }
+//                    }
+//                    filterdata=firstFilter;
+//                }
+//                FilterResults filterResults=new FilterResults();
+//                filterResults.values=filterdata;
+//                return filterResults;
+//            }
+//
+//            @Override
+//            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+//                filterdata=(List<User>)filterResults.values;
+//                notifyDataSetChanged();
+//
+//            }
+//        };
+////        //End filter
+    }
 
-}
+
