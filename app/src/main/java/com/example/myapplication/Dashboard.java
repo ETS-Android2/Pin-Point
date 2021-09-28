@@ -103,9 +103,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
     public String getCurrentValue(){
         AuthUser authUser=Amplify.Auth.getCurrentUser();
-        Log.e("getCurrentUser", authUser.toString());
-        Log.e("getCurrentUser", authUser.getUserId());
-        Log.e("getCurrentUser", authUser.getUsername());
+//        Log.e("getCurrentUser", authUser.toString());
+//        Log.e("getCurrentUser", authUser.getUserId());
+//        Log.e("getCurrentUser", authUser.getUsername());
         return authUser.getUsername();
     }
     public void goToProfile(){
@@ -144,7 +144,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
-        UserName.setText(getCurrentValue());
+        UserName.setText(com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername());
 
         RecyclerView recyclerView=findViewById(R.id.dashboardRecycleVeiw);
         recyclerView.setAdapter(new PinAdapter(taskList,this));
