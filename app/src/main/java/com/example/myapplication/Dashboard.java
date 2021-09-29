@@ -41,6 +41,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,13 +62,22 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         setContentView(R.layout.activity_dashboard);
         allNavationBarFunctions();
         buttonNavigationfun();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Dashboard.this);
-        SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
+
 //        @SuppressLint("NotifyDataSetChanged") Handler handler = new Handler(Looper.getMainLooper(), msg -> {
 //            Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
 //            return false;
 //        });
 
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Dashboard.this);
+        SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
         RecyclerView recyclerView = findViewById(R.id.dashboardRecycleVeiw);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -90,10 +101,27 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                     Log.i("MyAmplifyApp", response.getData().toString());
                     for (User user : response.getData()) {
                         me = user;
-                        pins=user.getPins();
+//                        pins=user.getPins();
                         System.out.println("mmmmmmmm" + me.getFirstName());
                         Log.i("MyAmplifyApp", String.valueOf(pins.size()));
                     }
+                    me.getFollowings().forEach(item->{
+
+                        Amplify.API.query(
+                                ModelQuery.list(Pin.class, Pin.USER.eq(item.getUserFollowing())),
+                                response1 -> {
+                                    for (Pin pin : response1.getData()) {
+                                        if(pin.getIsPrivate()!=true){
+                                            pins.add(pin);
+                                        }
+
+                                    }
+                                },
+                                error -> Log.e("MyAmplifyApp", "Query failure", error)
+                        );
+                    });
+
+
                     handler.sendEmptyMessage(1);
 
                     sharedEditor.putString("Id", me.getId());
@@ -110,10 +138,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
-
     }
 
-//    Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+    //    Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
 //        @SuppressLint("NotifyDataSetChanged")
 //        @Override
 //        public boolean handleMessage(@NonNull Message msg) {
@@ -246,6 +273,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
+
+
+
+
 
 //    public void imageBar(){
 //        androidx.appcompat.app.ActionBar actionBar=getSupportActionBar();

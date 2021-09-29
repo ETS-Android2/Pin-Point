@@ -39,6 +39,7 @@ public final class User implements Model {
   private final @ModelField(targetType="Following") @HasMany(associatedWith = "user", type = Following.class) List<Following> followings = null;
   private final @ModelField(targetType="Follower") @HasMany(associatedWith = "user", type = Follower.class) List<Follower> followers = null;
   private final @ModelField(targetType="Pin") @HasMany(associatedWith = "user", type = Pin.class) List<Pin> Pins = null;
+  private final @ModelField(targetType="Favorite") @HasMany(associatedWith = "user", type = Favorite.class) List<Favorite> favorites = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
@@ -79,6 +80,10 @@ public final class User implements Model {
   
   public List<Pin> getPins() {
       return Pins;
+  }
+  
+  public List<Favorite> getFavorites() {
+      return favorites;
   }
   
   public Temporal.DateTime getCreatedAt() {

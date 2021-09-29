@@ -9,6 +9,7 @@ type User @model @key(name: "byUser", fields: ["userName"]){
     followings: [Following] @connection(keyName: "byUser", fields: ["id"])
     followers: [Follower] @connection(keyName: "byUser", fields: ["id"])
     Pins:[Pin] @connection(keyName: "byUser", fields: ["id"])
+    favorites:[Favorite] @connection(keyName: "byUser", fields: ["id"])
 }
 
 type Pin @model
@@ -48,4 +49,12 @@ type Place @model {
     country: String
     approxlat:Float
     approxlon:Float
+}
+
+type Favorite @model
+@key(name: "byUser", fields: ["userID"]) {
+    id: ID!
+    userID: ID!
+    user:User @connection(fields: ["userID"])
+    pin: Pin @connection
 }
