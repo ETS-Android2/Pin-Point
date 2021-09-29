@@ -28,6 +28,7 @@ import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import java.util.Collections;
 
 public class Login extends AppCompatActivity {
+    private LoadingDialog loadingDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -39,11 +40,16 @@ public class Login extends AppCompatActivity {
         EditText username = findViewById(R.id.username_signIn);
         EditText password = findViewById(R.id.password_signIn);
         Button signUp = findViewById(R.id.createNewUser);
+        loadingDialog = new LoadingDialog(Login.this);
+        signIn.setOnClickListener(view -> {
+            loadingDialog.startLoading();
+            signInfunc(username.getText().toString(), password.getText().toString());
 
-        signIn.setOnClickListener(view -> signInfunc(username.getText().toString(), password.getText().toString()));
+        });
 
         signUp.setOnClickListener(view ->
         {
+
             Intent intent = new Intent(Login.this, com.example.myapplication.signup.class);
             startActivity(intent);
         });
@@ -78,10 +84,11 @@ public class Login extends AppCompatActivity {
                                     Intent goToCompleteRegistration = new Intent(Login.this, CompleteRegistration.class);
                                     goToCompleteRegistration.putExtra("userName", userName);
                                     startActivity(goToCompleteRegistration);
-                                }else {
+                                } else {
                                     Intent goToHome = new Intent(Login.this, Dashboard.class);
                                     goToHome.putExtra("userName", userName);
-                                    System.out.println("ooooo"+userName);
+                                    System.out.println("ooooo" + userName);
+                                    loadingDialog.dismissLoading();
                                     startActivity(goToHome);
                                 }
 

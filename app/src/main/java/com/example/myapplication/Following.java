@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Following extends AppCompatActivity {
+        private LoadingDialog loadingDialog;
+
+
     List<User> users=new ArrayList<>();
     List<String> followingsIds = new ArrayList<>();
     User me;
@@ -34,6 +37,10 @@ public class Following extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingDialog = new LoadingDialog(Following.this);
+        loadingDialog.startLoading();
+
+
         setContentView(R.layout.activity_following);
         runToolBar();
 
@@ -85,6 +92,7 @@ public class Following extends AppCompatActivity {
                     });
                     System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ users.size());
                     handler.sendEmptyMessage(1);
+                    loadingDialog.dismissLoading();
 
 //                    for (User user : response.getData()) {
 //                        for (int i = 0; i < me.getFollowers().size(); i++) {

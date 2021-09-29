@@ -40,6 +40,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Discover extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
+
+    private LoadingDialog loadingDialog;
+
+
     EditText searchVew;
     CharSequence search = "";
     DiscoverAdapter discoverAdapter;
@@ -57,11 +61,16 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 //        RecyleView();
+        loadingDialog = new LoadingDialog(Discover.this);
+
+        loadingDialog.startLoading();
+
+
         allNavationBarFunctions();
         buttonNavigationfun();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Discover.this);
         SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
-        userName = sharedPreferences.getString("userName","  ");
+        userName = sharedPreferences.getString("userName", "  ");
     }
 
     @Override
@@ -91,6 +100,7 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
             recyclerView.getAdapter().notifyDataSetChanged();
             return false;
         }
+
     });
 
     public void gettingUsers() {
@@ -98,7 +108,7 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
                 ModelQuery.list(User.class),
                 response -> {
                     for (User user : response.getData()) {
-                        if (!userName.equals(user.getUserName())){
+                        if (!userName.equals(user.getUserName())) {
                             usersList.add(user);
                             handler.sendEmptyMessage(1);
                             Log.i("MyAmplifyApp", user.getFirstName());
@@ -201,17 +211,18 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
         Intent goToHome = new Intent(Discover.this, Dashboard.class);
         startActivity(goToHome);
     }
-    public void goToPin(){
-        Intent gotoDiscoverPage=new Intent(Discover.this,NewPin.class);
+
+    public void goToPin() {
+        Intent gotoDiscoverPage = new Intent(Discover.this, NewPin.class);
         startActivity(gotoDiscoverPage);
     }
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
-            Intent a = new Intent(Discover.this,Dashboard.class);
+        } else {
+            Intent a = new Intent(Discover.this, Dashboard.class);
             startActivity(a);
 
         }
@@ -242,26 +253,26 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
-        ImageView userImage=(ImageView) navigationView.getHeaderView(0).findViewById(R.id.use_image);
+        ImageView userImage = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.use_image);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Discover.this);
         //FullName
-        String firstName=sharedPreferences.getString("firstName", "user");
-        String LastName=sharedPreferences.getString("LastName", "Name");
-        UserName.setText(firstName+" "+LastName);
+        String firstName = sharedPreferences.getString("firstName", "user");
+        String LastName = sharedPreferences.getString("LastName", "Name");
+        UserName.setText(firstName + " " + LastName);
 
         Amplify.Storage.downloadFile(
-                sharedPreferences.getString("Img","10"),
-                new File(getApplicationContext().getFilesDir() + sharedPreferences.getString("Img","10")),
+                sharedPreferences.getString("Img", "10"),
+                new File(getApplicationContext().getFilesDir() + sharedPreferences.getString("Img", "10")),
                 result -> {
-                    System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                    System.out.println("jjj" + sharedPreferences.getString("Img", "10"));
                     Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
                     userImage.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
-                    System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                    System.out.println("jjj" + sharedPreferences.getString("Img", "10"));
+                    loadingDialog.dismissLoading();
                 },
                 error -> Log.e("MyAmplifyApp", "Download Failure", error)
         );
-
 
 
     }

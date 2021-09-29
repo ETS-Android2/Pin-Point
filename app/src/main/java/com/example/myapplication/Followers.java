@@ -26,24 +26,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Followers extends AppCompatActivity {
-    List<User> users=new ArrayList<>();
+    private LoadingDialog loadingDialog;
+    List<User> users = new ArrayList<>();
     List<String> followersIds = new ArrayList<>();
     User me;
     Toolbar toolbar;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingDialog = new LoadingDialog(Followers.this);
+        loadingDialog.startLoading();
         setContentView(R.layout.activity_followers);
         runToolBar();
 
-        TextView numberOfFollowers=findViewById(R.id.numberOfFollowers);
+        TextView numberOfFollowers = findViewById(R.id.numberOfFollowers);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Followers.this);
         numberOfFollowers.setText(sharedPreferences.getString("followers", "0"));
 
         RecyclerView allUsersRecyclerView = findViewById(R.id.followersRecycle);
 
-        Handler handler =new Handler(Looper.getMainLooper(), new Handler.Callback() {
+        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
                 allUsersRecyclerView.getAdapter().notifyDataSetChanged();
@@ -52,7 +56,7 @@ public class Followers extends AppCompatActivity {
         });
 
         allUsersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        allUsersRecyclerView.setAdapter(new DiscoverAdapter(users,this));
+        allUsersRecyclerView.setAdapter(new DiscoverAdapter(users, this));
 
 
         String userName = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
@@ -60,7 +64,7 @@ public class Followers extends AppCompatActivity {
                 ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
                 response -> {
                     for (User user : response.getData()) {
-                        me =user;
+                        me = user;
                         Log.i("MyAmplifyApp", "hh");
 
                     }
@@ -75,14 +79,15 @@ public class Followers extends AppCompatActivity {
         Amplify.API.query(
                 ModelQuery.list(User.class),
                 response -> {
-                    System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ followersIds.toString());
+                    System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh" + followersIds.toString());
                     response.getData().forEach(value -> {
-                        if (followersIds.contains(value.getId())){
+                        if (followersIds.contains(value.getId())) {
                             users.add(value);
                         }
                     });
-                    System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ users.size());
+                    System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh" + users.size());
                     handler.sendEmptyMessage(1);
+                    loadingDialog.dismissLoading();
 
 //                    for (User user : response.getData()) {
 //                        for (int i = 0; i < me.getFollowers().size(); i++) {
@@ -96,7 +101,7 @@ public class Followers extends AppCompatActivity {
         );
     }
 
-    void runToolBar(){
+    void runToolBar() {
         toolbar = (Toolbar) findViewById(R.id.followersBar);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24); // your drawable
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
