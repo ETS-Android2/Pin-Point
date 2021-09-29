@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".PinImgFragment">
 
@@ -13,7 +13,6 @@
             android:id="@+id/singleImg"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/map"
             app:siBorderColor="@color/white"
             app:siBorderWidth="3dp"
             app:siRadius="6dp"/>

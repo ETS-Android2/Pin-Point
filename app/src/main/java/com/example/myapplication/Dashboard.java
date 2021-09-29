@@ -52,7 +52,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     NavigationView navigationView;
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
-    List<Pin> pins = new ArrayList<>();
+    List<Pin> pins;
     User me;
 //    RecyclerView recyclerView;
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -76,9 +76,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     @Override
     protected void onStart() {
         super.onStart();
+         pins= new ArrayList<>();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Dashboard.this);
         SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
-        RecyclerView recyclerView = findViewById(R.id.dashboardRecycleVeiw);
+        RecyclerView recyclerView = findViewById(R.id.profileRecycleVeiw);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
@@ -184,9 +185,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             case R.id.pin_butt:
                 goToPin();
                 break;
-            case R.id.fav_butt:
-                goToFav();
-                break;
         }
 
         return true;
@@ -214,17 +212,17 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
     public void goToProfile() {
-        Intent gotoProfile = new Intent(Dashboard.this, User_Page.class);
+        Intent gotoProfile = new Intent(getApplicationContext(), User_Page.class);
         startActivity(gotoProfile);
     }
 
     public void goToDicover() {
-        Intent gotoDiscoverPage = new Intent(Dashboard.this, Discover.class);
+        Intent gotoDiscoverPage = new Intent(getApplicationContext(), Discover.class);
         startActivity(gotoDiscoverPage);
     }
 
     public void goToPin() {
-        Intent gotoDiscoverPage = new Intent(Dashboard.this, NewPin.class);
+        Intent gotoDiscoverPage = new Intent(getApplicationContext(), NewPin.class);
         startActivity(gotoDiscoverPage);
     }
 
@@ -282,16 +280,4 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
 
-    public void goToFav() {
-        Intent gotoFavPage = new Intent(Dashboard.this, Favorite.class);
-        startActivity(gotoFavPage);
-    }
-//    public void imageBar(){
-//        androidx.appcompat.app.ActionBar actionBar=getSupportActionBar();
-//        actionBar.setDisplayShowCustomEnabled(true);
-//        LayoutInflater inflater=(LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        Veiw v=inflater.inflate(R.layout.cutom_image,null);
-//        actionBar.setCustomView(v);
-//
-//    }
 }

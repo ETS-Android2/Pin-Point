@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,13 +36,15 @@ public class PinDetails extends AppCompatActivity implements OnMapReadyCallback 
 
     private double latitude;
     private double longitude;
+    Toolbar toolbar;
+
 
     private FusedLocationProviderClient fusedLocationProviderClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_details);
-
+        runToolBar();
 
 
         Intent intent = getIntent();
@@ -119,5 +123,16 @@ public class PinDetails extends AppCompatActivity implements OnMapReadyCallback 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,12));
 //        googleMap.animateCamera(CameraUpdateFactory.zoomIn());
 //        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+    }
+
+    void runToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.followersBar);
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24); // your drawable
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); // Implemented by activity
+            }
+        });
     }
 }
