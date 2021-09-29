@@ -45,7 +45,7 @@ public class PinAdapter extends RecyclerView.Adapter<PinAdapter.PinVeiwHolder> {
     public PinAdapter(List<Pin> pins, Context context) {
         this.pins = pins;
         this.context = context;
-//        Log.i("ListCheck", String.valueOf(pins.size()));
+        Log.i("ListCheck", String.valueOf(pins.size()));
 
     }
 
@@ -57,7 +57,31 @@ public class PinAdapter extends RecyclerView.Adapter<PinAdapter.PinVeiwHolder> {
         public PinVeiwHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView=itemView;
+
 //            mainLayout=itemView.findViewById(R.id.pin_original);
+            Switch addToFavoateButtonId=itemView.findViewById(R.id.addToFavoateButtonId);
+            String authUser = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
+            addToFavoateButtonId.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(addToFavoateButtonId.isChecked()){
+
+                        Amplify.API.query(
+                                ModelQuery.list(User.class, User.USER_NAME.eq(authUser)),
+                                response -> {
+                                    for (User user : response.getData()) {
+                                        Favorite favorite=Favorite.builder().pin(pin).user(user).build();
+                                        Amplify.API.mutate(ModelMutation.create(favorite),
+                                                response1 -> Log.i("MyAmplifyApp", "Todo with id: " + response1.getData().getId()),
+                                                error -> Log.e("MyAmplifyApp", "Create failed", error)
+                                        );
+                                    }
+                                },
+                                error -> Log.e("MyAmplifyApp", "Query failure", error)
+                        );
+                    }
+                }
+            });
 
         }
 
@@ -79,7 +103,7 @@ public class PinAdapter extends RecyclerView.Adapter<PinAdapter.PinVeiwHolder> {
         holder.pin = pins.get(position);
         TextView name = holder.itemView.findViewById(R.id.pin_user2);
         TextView pinTime = holder.itemView.findViewById(R.id.pinTime);
-        pinTime.setText(holder.pin.getUser().getCreatedAt().format());
+        pinTime.setText(holder.pin.getCreatedAt().format());
         name.setText(holder.pin.getUser().getFirstName()+" "+holder.pin.getUser().getLastName());
         name.setText(holder.pin.getUser().getFirstName()+" "+holder.pin.getUser().getLastName());
         ImageView userPic = holder.itemView.findViewById(R.id.post_UserName2);

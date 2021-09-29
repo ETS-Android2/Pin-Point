@@ -31,6 +31,10 @@ query SyncUsers(
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -97,6 +101,19 @@ query GetUser($id: ID!) {
       nextToken
       startedAt
     }
+    favorites {
+      items {
+        id
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -127,6 +144,10 @@ query ListUsers(
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -219,6 +240,10 @@ query GetPin($id: ID!) {
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -366,6 +391,10 @@ query GetFollowing($id: ID!) {
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -478,6 +507,10 @@ query GetFollower($id: ID!) {
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -583,6 +616,191 @@ query ListPlaces(
       country
       approxlat
       approxlon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncFavorites(
+  $filter: ModelFavoriteFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncFavorites(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      pin {
+        id
+        userID
+        body
+        isPrivate
+        pinImg
+        lat
+        lon
+        locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetFavorite($id: ID!) {
+  getFavorite(id: $id) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    pin {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      place {
+        id
+        address
+        city
+        country
+        approxlat
+        approxlon
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      body
+      isPrivate
+      pinImg
+      lat
+      lon
+      locatName
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListFavorites(
+  $filter: ModelFavoriteFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listFavorites(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      pin {
+        id
+        userID
+        body
+        isPrivate
+        pinImg
+        lat
+        lon
+        locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
       _version
       _deleted
       _lastChangedAt

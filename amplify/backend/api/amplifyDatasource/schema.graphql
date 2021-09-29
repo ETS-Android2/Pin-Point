@@ -11,7 +11,6 @@ type User @model @key(name: "byUser", fields: ["userName"]){
     Pins:[Pin] @connection(keyName: "byUser", fields: ["id"])
     favorites:[Favorite] @connection(keyName: "byUser", fields: ["id"])
 }
-
 type Pin @model
 @key(name: "byUser", fields: ["userID","locatName"]) {
     id: ID!
@@ -25,7 +24,6 @@ type Pin @model
     lon:Float
     locatName:String
 }
-
 type Following @model
 @key(name: "byUser", fields: ["userID"]){
     id:ID!
@@ -33,7 +31,6 @@ type Following @model
     user:User @connection(fields: ["userID"])
     userFollowing:String
 }
-
 type Follower @model
 @key(name: "byUser", fields: ["userID"]){
     id:ID!
@@ -41,7 +38,6 @@ type Follower @model
     user:User @connection(fields: ["userID"])
     userFollower:String
 }
-
 type Place @model {
     id: ID!
     address: String!
@@ -50,7 +46,6 @@ type Place @model {
     approxlat:Float
     approxlon:Float
 }
-
 type Favorite @model
 @key(name: "byUser", fields: ["userID"]) {
     id: ID!

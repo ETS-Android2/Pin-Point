@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="110dp"
+                android:layout_marginLeft="50dp"
                 android:layout_toRightOf="@+id/post_UserName"
                 android:fontFamily="@font/francois_one"
                 android:includeFontPadding="false"
@@ -61,7 +61,16 @@
                 android:paddingTop="6dp"
                 android:text="1234567891234567891238448848"
                 android:textColor="#99000000"
-                android:textSize="8sp" />
+                android:textSize="8sp"
+                />
+
+            <Switch
+                android:id="@+id/addToFavoateButtonId"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                />
 
         </LinearLayout>
 

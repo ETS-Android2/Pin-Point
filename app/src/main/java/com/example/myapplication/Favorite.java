@@ -33,26 +33,29 @@ public class Favorite extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
         RecyclerView allFavRecyclerView = findViewById(R.id.recyclerViewFavoriteId);
+        allFavRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         String authUser = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
         Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
                 allFavRecyclerView.setAdapter(new PinAdapter(listPinFav, Favorite.this));
+
                 allFavRecyclerView.getAdapter().notifyDataSetChanged();
 
                 return false;
             }
         });
 
-        allFavRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         Amplify.API.query(
                 ModelQuery.list(User.class, User.USER_NAME.eq(authUser)),
                 response -> {
                     for (User user : response.getData()) {
                        me=user;
-
+                        System.out.println("jjjjjjjjjjjjjjj"+me.getFavorites().size());
                     }  me.getFavorites().forEach(item->{
+                        System.out.println("hhhhhhhhhhhhhhhhhhhhhhh"+item.getPin().getBody());
                         listPinFav.add(item.getPin());
                     });
                     handler.sendEmptyMessage(1);

@@ -93,8 +93,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
 
-//        String userName = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
-        String userName = sharedPreferences.getString("userName", "  ");
+        String userName = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
+//        String userName = sharedPreferences.getString("userName", "  ");
         Amplify.API.query(
                 ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
                 response -> {
@@ -116,13 +116,14 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                                         }
 
                                     }
+                                    handler.sendEmptyMessage(1);
                                 },
                                 error -> Log.e("MyAmplifyApp", "Query failure", error)
                         );
                     });
 
 
-                    handler.sendEmptyMessage(1);
+
 
                     sharedEditor.putString("Id", me.getId());
                     sharedEditor.putString("firstName", me.getFirstName());
@@ -138,6 +139,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
+
     }
 
     //    Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
@@ -181,6 +183,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
             case R.id.pin_butt:
                 goToPin();
+                break;
+            case R.id.fav_butt:
+                goToFav();
                 break;
         }
 
@@ -277,7 +282,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
 
-
+    public void goToFav() {
+        Intent gotoFavPage = new Intent(Dashboard.this, Favorite.class);
+        startActivity(gotoFavPage);
+    }
 //    public void imageBar(){
 //        androidx.appcompat.app.ActionBar actionBar=getSupportActionBar();
 //        actionBar.setDisplayShowCustomEnabled(true);
