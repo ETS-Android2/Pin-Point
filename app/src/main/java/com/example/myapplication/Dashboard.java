@@ -42,12 +42,13 @@ import java.util.List;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
     //Variables
-     DrawerLayout drawerLayout;
-     NavigationView navigationView;
-     BottomNavigationView bottomNavigationView;
-     Toolbar toolbar;
-     List<Pin> taskList=new ArrayList();
-     User me;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    BottomNavigationView bottomNavigationView;
+    Toolbar toolbar;
+    List<Pin> taskList = new ArrayList();
+    User me;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,29 +59,29 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Dashboard.this);
         SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
 //        String userName = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
-        String userName = sharedPreferences.getString("userName","  ");
+        String userName = sharedPreferences.getString("userName", "  ");
         Amplify.API.query(
                 ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
                 response -> {
                     Log.i("MyAmplifyApp", response.getData().toString());
                     for (User user : response.getData()) {
-                        me =user;
-                        System.out.println("mmmmmmmm"+me.getFirstName());
+                        me = user;
+                        System.out.println("mmmmmmmm" + me.getFirstName());
                         Log.i("MyAmplifyApp", "hh");
 
                     }
 
-                        sharedEditor.putString("Id", me.getId());
-                        sharedEditor.putString("firstName",me.getFirstName());
-                        sharedEditor.putString("bio", me.getBio());
-                        sharedEditor.putString("Img", me.getImg());
-                        sharedEditor.putString("LastName", me.getLastName());
-                        sharedEditor.putString("followers", String.valueOf(me.getFollowers().size()));
-                        sharedEditor.putString("following", String.valueOf(me.getFollowings().size()));
+                    sharedEditor.putString("Id", me.getId());
+                    sharedEditor.putString("firstName", me.getFirstName());
+                    sharedEditor.putString("bio", me.getBio());
+                    sharedEditor.putString("Img", me.getImg());
+                    sharedEditor.putString("LastName", me.getLastName());
+                    sharedEditor.putString("followers", String.valueOf(me.getFollowers().size()));
+                    sharedEditor.putString("following", String.valueOf(me.getFollowings().size()));
 
                     sharedEditor.apply();
 
-                        System.out.println("zzzzzzzzzz"+me.getImg());
+                    System.out.println("zzzzzzzzzz" + me.getImg());
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
@@ -89,9 +90,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
+        } else {
             Intent a = new Intent(Intent.ACTION_MAIN);
             a.addCategory(Intent.CATEGORY_HOME);
             a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -101,7 +102,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_home:
                 break;
             case R.id.nav_logout:
@@ -127,45 +128,47 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
 
-    public void logout(){
+    public void logout() {
         Amplify.Auth.signOut(
-                () ->{
+                () -> {
                     Log.i("logout", "successfully logout");
                     Intent goToLogin = new Intent(getBaseContext(), Login.class);
                     startActivity(goToLogin);
                     finish();
-                } ,
+                },
                 error -> Log.e("logout", error.toString())
         );
     }
 
-    public String getCurrentValue(){
-        AuthUser authUser=Amplify.Auth.getCurrentUser();
+    public String getCurrentValue() {
+        AuthUser authUser = Amplify.Auth.getCurrentUser();
 //        Log.e("getCurrentUser", authUser.toString());
 //        Log.e("getCurrentUser", authUser.getUserId());
 //        Log.e("getCurrentUser", authUser.getUsername());
         return authUser.getUsername();
     }
-    public void goToProfile(){
-        Intent gotoProfile=new Intent(Dashboard.this,User_Page.class);
+
+    public void goToProfile() {
+        Intent gotoProfile = new Intent(Dashboard.this, User_Page.class);
         startActivity(gotoProfile);
     }
-    public void goToDicover(){
-        Intent gotoDiscoverPage=new Intent(Dashboard.this,Discover.class);
-        startActivity(gotoDiscoverPage);
-    }
-    public void goToPin(){
-        Intent gotoDiscoverPage=new Intent(Dashboard.this,NewPin.class);
+
+    public void goToDicover() {
+        Intent gotoDiscoverPage = new Intent(Dashboard.this, Discover.class);
         startActivity(gotoDiscoverPage);
     }
 
+    public void goToPin() {
+        Intent gotoDiscoverPage = new Intent(Dashboard.this, NewPin.class);
+        startActivity(gotoDiscoverPage);
+    }
 
 
-    public void allNavationBarFunctions(){
+    public void allNavationBarFunctions() {
         /*----------Hooks---------*/
-        drawerLayout =findViewById(R.id.drawer_layout);
-        navigationView=findViewById(R.id.nav_veiw);
-        toolbar=findViewById(R.id.toolbar3);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_veiw);
+        toolbar = findViewById(R.id.toolbar3);
 
 
 
@@ -174,7 +177,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         /*----------NavationDrawerMenu---------*/
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -182,35 +185,36 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
-        ImageView userImage=(ImageView) navigationView.getHeaderView(0).findViewById(R.id.use_image);
+        ImageView userImage = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.use_image);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Dashboard.this);
         //FullName
-        String firstName=sharedPreferences.getString("firstName", "user");
-        String LastName=sharedPreferences.getString("LastName", "Name");
-        UserName.setText(firstName+" "+LastName);
+        String firstName = sharedPreferences.getString("firstName", "user");
+        String LastName = sharedPreferences.getString("LastName", "Name");
+        UserName.setText(firstName + " " + LastName);
+        String img = sharedPreferences.getString("Img", "10");
+        Log.i("Why",img);
+        Amplify.Storage.downloadFile(
+                img,
+                new File(getApplicationContext().getFilesDir() + img),
+                result -> {
+                    System.out.println("jjj" + sharedPreferences.getString("Img", "10"));
+                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
+                    userImage.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
+                    System.out.println("jjj" + sharedPreferences.getString("Img", "10"));
+                },
+                error -> Log.e("MyAmplifyApp", "Download Failure", error)
+        );
 
-                Amplify.Storage.downloadFile(
-                        sharedPreferences.getString("Img","10"),
-                        new File(getApplicationContext().getFilesDir() + sharedPreferences.getString("Img","10")),
-                        result -> {
-                            System.out.println("jjj"+sharedPreferences.getString("Img","10"));
-                            Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
-                            userImage.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
-                            System.out.println("jjj"+sharedPreferences.getString("Img","10"));
-                        },
-                        error -> Log.e("MyAmplifyApp", "Download Failure", error)
-                );
-
-        RecyclerView recyclerView=findViewById(R.id.dashboardRecycleVeiw);
-        recyclerView.setAdapter(new PinAdapter(taskList,this));
+        RecyclerView recyclerView = findViewById(R.id.dashboardRecycleVeiw);
+        recyclerView.setAdapter(new PinAdapter(taskList, this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
     }
 
-    public void buttonNavigationfun(){
-        bottomNavigationView=findViewById(R.id.butt_nav_view);
+    public void buttonNavigationfun() {
+        bottomNavigationView = findViewById(R.id.butt_nav_view);
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }

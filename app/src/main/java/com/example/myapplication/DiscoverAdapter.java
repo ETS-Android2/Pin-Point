@@ -55,43 +55,32 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
             Button unfollow = itemView.findViewById(R.id.unfollowButtonFragmentId);
 
 
-
-            follow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                   User userCopy=meUser.copyOfBuilder().
-                    Following followingUser = Following.builder().user(meUser).userFollowing(user.getId()).build();
-                    Follower followerUser = Follower.builder().user(user).userFollower(meUser.getId()).build();
-                    Amplify.API.mutate(ModelMutation.create(followingUser),
-                            response1 -> Log.i("following", "following with id: " + response1.getData().getId()),
-                            error -> Log.e("following", "Create failed", error)
-                    );
-                    Amplify.API.mutate(ModelMutation.create(followerUser),
-                            response2 -> Log.i("follower", "follower with id: " + response2.getData().getId()),
-                            error -> Log.e("follower", "Create failed", error)
-                    );
-//                    public void handler() {
-//                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                itemView.getContext().startActivity(new Intent(itemView.getContext(),Discover.class));
-//                            }
-//                        });
-//                    }
-//                    handler();
-                }
-
-
-//                    toDetailsPage.putExtra("title",task.getTitle());
-//                    toDetailsPage.putExtra("body",task.getBody());
-//                    toDetailsPage.putExtra("state",task.getState());
-//                    toDetailsPage.putExtra("imgName",task.getImgName());
-//                    toDetailsPage.putExtra("lon",task.getLon());
-//                    toDetailsPage.putExtra("lat",task.getLat());
-//
-//                    v.getContext().startActivity(toDetailsPage);
+//            follow.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+////                   User userCopy=meUser.copyOfBuilder().
+//                    Following followingUser = Following.builder().user(meUser).userFollowing(user.getId()).build();
+//                    Follower followerUser = Follower.builder().user(user).userFollower(meUser.getId()).build();
+//                    Amplify.API.mutate(ModelMutation.create(followingUser),
+//                            response1 -> Log.i("following", "following with id: " + response1.getData().getId()),
+//                            error -> Log.e("following", "Create failed", error)
+//                    );
+//                    Amplify.API.mutate(ModelMutation.create(followerUser),
+//                            response2 -> Log.i("follower", "follower with id: " + response2.getData().getId()),
+//                            error -> Log.e("follower", "Create failed", error)
+//                    );
+////                    public void handler() {
+////                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+////                            @Override
+////                            public void run() {
+////                                itemView.getContext().startActivity(new Intent(itemView.getContext(),Discover.class));
+////                            }
+////                        });
+////                    }
+////                    handler();
 //                }
-            });
+//
+//            });
 //            mainLayout=itemView.findViewById(R.id.pin_original);
         }
     }
@@ -104,7 +93,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
         return taskVeiwHolder;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     @Override
     public void onBindViewHolder(@NonNull UserVeiwHolder holder, @SuppressLint("RecyclerView") int position) {
 
@@ -114,6 +103,24 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
 
         Button follow = holder.itemView.findViewById(R.id.followButtonFragmentId);
         Button unfollow = holder.itemView.findViewById(R.id.unfollowButtonFragmentId);
+
+        follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Following followingUser = Following.builder().user(meUser).userFollowing(holder.user.getId()).build();
+                Follower followerUser = Follower.builder().user(holder.user).userFollower(meUser.getId()).build();
+                Amplify.API.mutate(ModelMutation.create(followingUser),
+                        response1 -> Log.i("following", "following with id: " + response1.getData().getId()),
+                        error -> Log.e("following", "Create failed", error)
+                );
+                Amplify.API.mutate(ModelMutation.create(followerUser),
+                        response2 -> Log.i("follower", "follower with id: " + response2.getData().getId()),
+                        error -> Log.e("follower", "Create failed", error)
+                );
+                notifyItemChanged(position);
+            }
+
+        });
 
         Amplify.Storage.downloadFile(
                 holder.user.getImg(),
@@ -145,8 +152,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
                         for (Following following : meUser.getFollowings()) {
                             if (following.getUserFollowing().equals(holder.user.getId())) {
                                 follow.setVisibility(View.INVISIBLE);
-//                                unfollow.setVisibility(View.VISIBLE);
-//                                unfollow.setVisibility(View.INVISIBLE);
                             }
                         }
                     }

@@ -33,7 +33,6 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.User
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
-
         }
     }
 
