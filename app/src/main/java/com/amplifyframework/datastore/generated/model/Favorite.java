@@ -167,6 +167,7 @@ public final class Favorite implements Model {
     }
     
     /** 
+<<<<<<< HEAD
      * WARNING: Do not set ID when creating a new object. Leave this blank and one will be auto generated for you.
      * This should only be set when referring to an already existing object.
      * @param id id
@@ -183,6 +184,13 @@ public final class Favorite implements Model {
                     exception);
         }
         
+=======
+     * @param id id
+     * @return Current Builder instance, for fluent method chaining
+     */
+    public BuildStep id(String id) {
+        this.id = id;
+>>>>>>> origin/diplayPost
         return this;
     }
   }
