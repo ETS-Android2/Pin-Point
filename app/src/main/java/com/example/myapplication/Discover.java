@@ -81,6 +81,7 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
         recyclerView = findViewById(R.id.discoverRecycleVeiw);
         recyclerView.setAdapter(new DiscoverAdapter(usersList, this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
     }
 
 

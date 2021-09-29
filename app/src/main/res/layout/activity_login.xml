@@ -60,36 +60,38 @@
        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_toggle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/password_toggle"
-            android:hint="password"
-            app:passwordToggleEnabled="true"
-            app:counterEnabled="true"
             android:fontFamily="@font/francois_one"
+            android:hint="Password"
+            app:counterEnabled="true"
             app:counterMaxLength="16"
             app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_baseline_lock_24"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24">
+
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
                 android:id="@+id/password_signIn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/forgetPassword"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:background="#00000000"
-            android:text="FORGET PASSWORD?"
-            android:textColor="#E6000000"
-            android:layout_gravity="right"
             android:elevation="0dp"
             android:fontFamily="@font/francois_one"
-            android:layout_margin="5dp"/>
+            android:paddingLeft="0dp"
+            android:text="FORGET PASSWORD?"
+            android:textColor="#E6000000" />
 
         <Button
             android:id="@+id/signIn_button"

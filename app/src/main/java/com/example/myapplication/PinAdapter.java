@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,19 +28,21 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 public class PinAdapter extends RecyclerView.Adapter<PinAdapter.PinVeiwHolder> {
 
     List<Pin> pins=new ArrayList<>();
+
     Context context;
     static User meUser;
 //    GoogleMap googleMap;
 
     public PinAdapter(List<Pin> pins, Context context) {
-        this.pins = pins;
         this.context = context;
+        this.pins = pins;
 //        Log.i("ListCheck", String.valueOf(pins.size()));
 
     }
@@ -53,6 +56,19 @@ public class PinAdapter extends RecyclerView.Adapter<PinAdapter.PinVeiwHolder> {
             super(itemView);
             this.itemView=itemView;
 //            mainLayout=itemView.findViewById(R.id.pin_original);
+//            assert pin != null;
+//            String[] images = pin.getPinImg().toArray(new String[0]);
+            itemView.setOnClickListener(view -> {
+                Intent goToDetailPage = new Intent(view.getContext(),PinDetails.class);
+                goToDetailPage.putExtra("user",(pin.getUser().getFirstName()+" "+pin.getUser().getLastName()));
+                goToDetailPage.putExtra("pinImg",(ArrayList<String>)pin.getPinImg());
+                goToDetailPage.putExtra("userImg",pin.getUser().getImg());
+                goToDetailPage.putExtra("date",pin.getCreatedAt().format());
+                goToDetailPage.putExtra("lat",pin.getLat());
+                goToDetailPage.putExtra("lon",pin.getLon());
+                goToDetailPage.putExtra("pinBody",pin.getBody());
+                view.getContext().startActivity(goToDetailPage);
+            });
         }
     }
 
@@ -72,9 +88,9 @@ public class PinAdapter extends RecyclerView.Adapter<PinAdapter.PinVeiwHolder> {
         holder.pin = pins.get(position);
         TextView name = holder.itemView.findViewById(R.id.pin_user2);
         TextView pinTime = holder.itemView.findViewById(R.id.pinTime);
-        pinTime.setText(holder.pin.getUser().getCreatedAt().format());
+        pinTime.setText(holder.pin.getCreatedAt().format());
         name.setText(holder.pin.getUser().getFirstName()+" "+holder.pin.getUser().getLastName());
-        name.setText(holder.pin.getUser().getFirstName()+" "+holder.pin.getUser().getLastName());
+//        name.setText(holder.pin.getUser().getFirstName()+" "+holder.pin.getUser().getLastName());
         ImageView userPic = holder.itemView.findViewById(R.id.post_UserName2);
         ImageView map = holder.itemView.findViewById(R.id.map_id);
         TextView pinBody = holder.itemView.findViewById(R.id.pin_text);

@@ -17,17 +17,17 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the Following type in your schema. */
+/** This is an auto generated class representing the Favorite type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "Followings")
+@ModelConfig(pluralName = "Favorites")
 @Index(name = "byUser", fields = {"userID"})
-public final class Following implements Model {
-  public static final QueryField ID = field("Following", "id");
-  public static final QueryField USER = field("Following", "userID");
-  public static final QueryField USER_FOLLOWING = field("Following", "userFollowing");
+public final class Favorite implements Model {
+  public static final QueryField ID = field("Favorite", "id");
+  public static final QueryField USER = field("Favorite", "userID");
+  public static final QueryField PIN = field("Favorite", "favoritePinId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="User") @BelongsTo(targetName = "userID", type = User.class) User user;
-  private final @ModelField(targetType="String") String userFollowing;
+  private final @ModelField(targetType="Pin") @BelongsTo(targetName = "favoritePinId", type = Pin.class) Pin pin;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
@@ -38,8 +38,8 @@ public final class Following implements Model {
       return user;
   }
   
-  public String getUserFollowing() {
-      return userFollowing;
+  public Pin getPin() {
+      return pin;
   }
   
   public Temporal.DateTime getCreatedAt() {
@@ -50,10 +50,10 @@ public final class Following implements Model {
       return updatedAt;
   }
   
-  private Following(String id, User user, String userFollowing) {
+  private Favorite(String id, User user, Pin pin) {
     this.id = id;
     this.user = user;
-    this.userFollowing = userFollowing;
+    this.pin = pin;
   }
   
   @Override
@@ -63,12 +63,12 @@ public final class Following implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      Following following = (Following) obj;
-      return ObjectsCompat.equals(getId(), following.getId()) &&
-              ObjectsCompat.equals(getUser(), following.getUser()) &&
-              ObjectsCompat.equals(getUserFollowing(), following.getUserFollowing()) &&
-              ObjectsCompat.equals(getCreatedAt(), following.getCreatedAt()) &&
-              ObjectsCompat.equals(getUpdatedAt(), following.getUpdatedAt());
+      Favorite favorite = (Favorite) obj;
+      return ObjectsCompat.equals(getId(), favorite.getId()) &&
+              ObjectsCompat.equals(getUser(), favorite.getUser()) &&
+              ObjectsCompat.equals(getPin(), favorite.getPin()) &&
+              ObjectsCompat.equals(getCreatedAt(), favorite.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), favorite.getUpdatedAt());
       }
   }
   
@@ -77,7 +77,7 @@ public final class Following implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getUser())
-      .append(getUserFollowing())
+      .append(getPin())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -87,10 +87,10 @@ public final class Following implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("Following {")
+      .append("Favorite {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("user=" + String.valueOf(getUser()) + ", ")
-      .append("userFollowing=" + String.valueOf(getUserFollowing()) + ", ")
+      .append("pin=" + String.valueOf(getPin()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -110,7 +110,7 @@ public final class Following implements Model {
    * @return an instance of this model with only ID populated
    * @throws IllegalArgumentException Checks that ID is in the proper format
    */
-  public static Following justId(String id) {
+  public static Favorite justId(String id) {
     try {
       UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
     } catch (Exception exception) {
@@ -120,7 +120,7 @@ public final class Following implements Model {
               "creating a new object, use the standard builder method and leave the ID field blank."
       );
     }
-    return new Following(
+    return new Favorite(
       id,
       null,
       null
@@ -130,28 +130,28 @@ public final class Following implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       user,
-      userFollowing);
+      pin);
   }
   public interface BuildStep {
-    Following build();
+    Favorite build();
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep user(User user);
-    BuildStep userFollowing(String userFollowing);
+    BuildStep pin(Pin pin);
   }
   
 
   public static class Builder implements BuildStep {
     private String id;
     private User user;
-    private String userFollowing;
+    private Pin pin;
     @Override
-     public Following build() {
+     public Favorite build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new Following(
+        return new Favorite(
           id,
           user,
-          userFollowing);
+          pin);
     }
     
     @Override
@@ -161,8 +161,8 @@ public final class Following implements Model {
     }
     
     @Override
-     public BuildStep userFollowing(String userFollowing) {
-        this.userFollowing = userFollowing;
+     public BuildStep pin(Pin pin) {
+        this.pin = pin;
         return this;
     }
     
@@ -189,10 +189,10 @@ public final class Following implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, User user, String userFollowing) {
+    private CopyOfBuilder(String id, User user, Pin pin) {
       super.id(id);
       super.user(user)
-        .userFollowing(userFollowing);
+        .pin(pin);
     }
     
     @Override
@@ -201,8 +201,8 @@ public final class Following implements Model {
     }
     
     @Override
-     public CopyOfBuilder userFollowing(String userFollowing) {
-      return (CopyOfBuilder) super.userFollowing(userFollowing);
+     public CopyOfBuilder pin(Pin pin) {
+      return (CopyOfBuilder) super.pin(pin);
     }
   }
   

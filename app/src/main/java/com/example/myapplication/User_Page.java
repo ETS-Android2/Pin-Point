@@ -6,14 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
-import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Pin;
 import com.amplifyframework.datastore.generated.model.User;
@@ -39,7 +41,7 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
     NavigationView navigationView;
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
-    List<Pin> taskList=new ArrayList();
+    List<Pin> pins = new ArrayList<>();
     User me;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,35 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
                     System.out.println(sharedPreferences.getString("Img","10"));
                 },
                 error -> Log.e("MyAmplifyApp", "Download Failure", error)
+        );
+
+        RecyclerView recyclerView = findViewById(R.id.profileRecycleVeiw);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public boolean handleMessage(@NonNull Message msg) {
+                recyclerView.setAdapter(new PinAdapter(pins, User_Page.this));
+                recyclerView.getAdapter().notifyDataSetChanged();
+                return false;
+            }
+        });
+
+        String userName = sharedPreferences.getString("userName", "  ");
+        Amplify.API.query(
+                ModelQuery.list(User.class, User.USER_NAME.eq(userName)),
+                response -> {
+                    Log.i("MyAmplifyApp", response.getData().toString());
+                    for (User user : response.getData()) {
+                        me = user;
+                        pins=user.getPins();
+                        System.out.println("mmmmmmmm" + me.getFirstName());
+                        Log.i("MyAmplifyApp", String.valueOf(pins.size()));
+                    }
+                    handler.sendEmptyMessage(1);
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
 
         allNavationBarFunctions();
@@ -223,8 +254,8 @@ public class User_Page extends AppCompatActivity implements NavigationView.OnNav
                 error -> Log.e("MyAmplifyApp", "Download Failure", error)
         );
 
-        RecyclerView recyclerView=findViewById(R.id.dashboardRecycleVeiw);
-        recyclerView.setAdapter(new PinAdapter(taskList,this));
+        RecyclerView recyclerView=findViewById(R.id.profileRecycleVeiw);
+        recyclerView.setAdapter(new PinAdapter(pins,this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 

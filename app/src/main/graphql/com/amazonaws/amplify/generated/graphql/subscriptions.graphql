@@ -55,6 +55,19 @@ subscription OnCreateUser {
       nextToken
       startedAt
     }
+    favorites {
+      items {
+        id
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -109,6 +122,19 @@ subscription OnUpdateUser {
         lat
         lon
         locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    favorites {
+      items {
+        id
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -181,6 +207,19 @@ subscription OnDeleteUser {
       nextToken
       startedAt
     }
+    favorites {
+      items {
+        id
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -209,6 +248,10 @@ subscription OnCreatePin {
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -268,6 +311,10 @@ subscription OnUpdatePin {
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -321,6 +368,10 @@ subscription OnDeletePin {
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -380,6 +431,10 @@ subscription OnCreateFollowing {
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -415,6 +470,10 @@ subscription OnUpdateFollowing {
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -456,6 +515,10 @@ subscription OnDeleteFollowing {
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -491,6 +554,10 @@ subscription OnCreateFollower {
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -532,6 +599,10 @@ subscription OnUpdateFollower {
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -567,6 +638,10 @@ subscription OnDeleteFollower {
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -622,6 +697,255 @@ subscription OnDeletePlace {
     country
     approxlat
     approxlon
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateFavorite {
+  onCreateFavorite {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    pin {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      place {
+        id
+        address
+        city
+        country
+        approxlat
+        approxlon
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      body
+      isPrivate
+      pinImg
+      lat
+      lon
+      locatName
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateFavorite {
+  onUpdateFavorite {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    pin {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      place {
+        id
+        address
+        city
+        country
+        approxlat
+        approxlon
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      body
+      isPrivate
+      pinImg
+      lat
+      lon
+      locatName
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteFavorite {
+  onDeleteFavorite {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    pin {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      place {
+        id
+        address
+        city
+        country
+        approxlat
+        approxlon
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      body
+      isPrivate
+      pinImg
+      lat
+      lon
+      locatName
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     _version
     _deleted
     _lastChangedAt

@@ -58,6 +58,19 @@ mutation CreateUser(
       nextToken
       startedAt
     }
+    favorites {
+      items {
+        id
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -115,6 +128,19 @@ mutation UpdateUser(
         lat
         lon
         locatName
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    favorites {
+      items {
+        id
+        userID
         _version
         _deleted
         _lastChangedAt
@@ -190,6 +216,19 @@ mutation DeleteUser(
       nextToken
       startedAt
     }
+    favorites {
+      items {
+        id
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -221,6 +260,10 @@ mutation CreatePin(
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -283,6 +326,10 @@ mutation UpdatePin(
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -339,6 +386,10 @@ mutation DeletePin(
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -401,6 +452,10 @@ mutation CreateFollowing(
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -439,6 +494,10 @@ mutation UpdateFollowing(
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -483,6 +542,10 @@ mutation DeleteFollowing(
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -521,6 +584,10 @@ mutation CreateFollower(
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -565,6 +632,10 @@ mutation UpdateFollower(
         nextToken
         startedAt
       }
+      favorites {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -603,6 +674,10 @@ mutation DeleteFollower(
         startedAt
       }
       Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
         nextToken
         startedAt
       }
@@ -667,6 +742,264 @@ mutation DeletePlace(
     country
     approxlat
     approxlon
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateFavorite(
+  $input: CreateFavoriteInput!
+  $condition: ModelFavoriteConditionInput
+) {
+  createFavorite(input: $input, condition: $condition) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    pin {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      place {
+        id
+        address
+        city
+        country
+        approxlat
+        approxlon
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      body
+      isPrivate
+      pinImg
+      lat
+      lon
+      locatName
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateFavorite(
+  $input: UpdateFavoriteInput!
+  $condition: ModelFavoriteConditionInput
+) {
+  updateFavorite(input: $input, condition: $condition) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    pin {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      place {
+        id
+        address
+        city
+        country
+        approxlat
+        approxlon
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      body
+      isPrivate
+      pinImg
+      lat
+      lon
+      locatName
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteFavorite(
+  $input: DeleteFavoriteInput!
+  $condition: ModelFavoriteConditionInput
+) {
+  deleteFavorite(input: $input, condition: $condition) {
+    id
+    userID
+    user {
+      id
+      userName
+      firstName
+      lastName
+      bio
+      email
+      img
+      followings {
+        nextToken
+        startedAt
+      }
+      followers {
+        nextToken
+        startedAt
+      }
+      Pins {
+        nextToken
+        startedAt
+      }
+      favorites {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    pin {
+      id
+      userID
+      user {
+        id
+        userName
+        firstName
+        lastName
+        bio
+        email
+        img
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      place {
+        id
+        address
+        city
+        country
+        approxlat
+        approxlon
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      body
+      isPrivate
+      pinImg
+      lat
+      lon
+      locatName
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
     _version
     _deleted
     _lastChangedAt
