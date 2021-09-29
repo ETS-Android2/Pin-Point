@@ -203,6 +203,11 @@ public class NewPin extends AppCompatActivity {
                     Place newPlace = Place.builder().address(cityNameStorage + ", " + countryNameStorage).city(cityNameStorage).country(countryNameStorage).approxlat(approxLat).approxlon(approxLon).build();
                     Pin newPin = Pin.builder().place(newPlace).body(pinBody.getText().toString()).lat(latitude).lon(longitude).locatName(cityNameStorage + ", " + countryNameStorage).user(meUser).pinImg(imageUris).isPrivate(privacySwitch.isChecked()).build();
                     Amplify.API.mutate(
+                            ModelMutation.create(newPlace),
+                            response1 -> Log.i("CreatePin", "Added Todo with id: " + response1.getData().getAddress()),
+                            error -> Log.e("CreatePin", "Create failed", error)
+                    );
+                    Amplify.API.mutate(
                             ModelMutation.create(newPin),
                             response1 -> Log.i("CreatePin", "Added Todo with id: " + response1.getData().getLocatName()),
                             error -> Log.e("CreatePin", "Create failed", error)
@@ -211,6 +216,8 @@ public class NewPin extends AppCompatActivity {
                 },
                 error -> Log.e("MyAmplifyApp", "Team Query failure", error)
         );
+        Intent goToProfile = new Intent(NewPin.this, User_Page.class);
+        startActivity(goToProfile);
 
     }
 

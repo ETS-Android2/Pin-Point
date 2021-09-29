@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.TaskStackBuilder;
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +42,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
     //Variables
@@ -46,9 +50,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     NavigationView navigationView;
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
-    List<Pin> taskList = new ArrayList();
+    List<Pin> pins = new ArrayList<>();
     User me;
-
+//    RecyclerView recyclerView;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,26 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         buttonNavigationfun();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Dashboard.this);
         SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
+//        @SuppressLint("NotifyDataSetChanged") Handler handler = new Handler(Looper.getMainLooper(), msg -> {
+//            Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+//            return false;
+//        });
+
+        RecyclerView recyclerView = findViewById(R.id.dashboardRecycleVeiw);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public boolean handleMessage(@NonNull Message msg) {
+                recyclerView.setAdapter(new PinAdapter(pins, Dashboard.this));
+                recyclerView.getAdapter().notifyDataSetChanged();
+                return false;
+            }
+        });
+
+
+
 //        String userName = com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername();
         String userName = sharedPreferences.getString("userName", "  ");
         Amplify.API.query(
@@ -66,10 +90,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                     Log.i("MyAmplifyApp", response.getData().toString());
                     for (User user : response.getData()) {
                         me = user;
+                        pins=user.getPins();
                         System.out.println("mmmmmmmm" + me.getFirstName());
-                        Log.i("MyAmplifyApp", "hh");
-
+                        Log.i("MyAmplifyApp", String.valueOf(pins.size()));
                     }
+                    handler.sendEmptyMessage(1);
 
                     sharedEditor.putString("Id", me.getId());
                     sharedEditor.putString("firstName", me.getFirstName());
@@ -85,9 +110,17 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
+
     }
 
-
+//    Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+//        @SuppressLint("NotifyDataSetChanged")
+//        @Override
+//        public boolean handleMessage(@NonNull Message msg) {
+//            recyclerView.getAdapter().notifyDataSetChanged();
+//            return false;
+//        }
+//    });
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -205,11 +238,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 },
                 error -> Log.e("MyAmplifyApp", "Download Failure", error)
         );
-
-        RecyclerView recyclerView = findViewById(R.id.dashboardRecycleVeiw);
-        recyclerView.setAdapter(new PinAdapter(taskList, this));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
     }
 

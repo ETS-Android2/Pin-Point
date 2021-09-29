@@ -51,37 +51,9 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.UserVe
         public UserVeiwHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
-            Button follow = itemView.findViewById(R.id.followButtonFragmentId);
-            Button unfollow = itemView.findViewById(R.id.unfollowButtonFragmentId);
+//            Button follow = itemView.findViewById(R.id.followButtonFragmentId);
+//            Button unfollow = itemView.findViewById(R.id.unfollowButtonFragmentId);
 
-
-//            follow.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                   User userCopy=meUser.copyOfBuilder().
-//                    Following followingUser = Following.builder().user(meUser).userFollowing(user.getId()).build();
-//                    Follower followerUser = Follower.builder().user(user).userFollower(meUser.getId()).build();
-//                    Amplify.API.mutate(ModelMutation.create(followingUser),
-//                            response1 -> Log.i("following", "following with id: " + response1.getData().getId()),
-//                            error -> Log.e("following", "Create failed", error)
-//                    );
-//                    Amplify.API.mutate(ModelMutation.create(followerUser),
-//                            response2 -> Log.i("follower", "follower with id: " + response2.getData().getId()),
-//                            error -> Log.e("follower", "Create failed", error)
-//                    );
-////                    public void handler() {
-////                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-////                            @Override
-////                            public void run() {
-////                                itemView.getContext().startActivity(new Intent(itemView.getContext(),Discover.class));
-////                            }
-////                        });
-////                    }
-////                    handler();
-//                }
-//
-//            });
-//            mainLayout=itemView.findViewById(R.id.pin_original);
         }
     }
 
