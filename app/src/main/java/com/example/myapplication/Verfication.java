@@ -11,11 +11,19 @@ import android.widget.EditText;
 import com.amplifyframework.core.Amplify;
 
 public class Verfication extends AppCompatActivity {
+
+    private LoadingDialog loadingDialog;
+
+
+
     private String username;
     private String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingDialog = new LoadingDialog(Verfication.this);
+
+
         setContentView(R.layout.activity_verfication);
         Button verfiy=findViewById(R.id.verficationButton);
         EditText code=findViewById(R.id.vervicationTextInput);
@@ -25,7 +33,12 @@ public class Verfication extends AppCompatActivity {
 //        username=intent.getExtras().getString("username");
 //        password=intent.getExtras().getString("password","");
 
-        verfiy.setOnClickListener(view -> verification(username,code.getText().toString()));
+        verfiy.setOnClickListener(view -> {
+            loadingDialog.startLoading();
+
+
+            verification(username, code.getText().toString());
+        });
     }
 
     void verification (String username,String verficationCode){
@@ -36,7 +49,7 @@ public class Verfication extends AppCompatActivity {
                     Log.i("verification", "verification successful: " + success.toString());
                     Intent goToSignIn = new Intent(Verfication.this, Login.class);
                     goToSignIn.putExtra("username", username);
-
+                    loadingDialog.dismissLoading();
                     startActivity(goToSignIn);
                 },
                 error -> {

@@ -14,10 +14,11 @@ import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 
 public class signup extends AppCompatActivity {
-
+   private LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingDialog = new LoadingDialog(signup.this);
         setContentView(R.layout.activity_signup);
         Button signUp = findViewById(R.id.signup_button);
         EditText username = findViewById(R.id.username_signup_text);
@@ -31,6 +32,7 @@ public class signup extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadingDialog.startLoading();
                 signUp(username.getText().toString(), email.getText().toString(), password.getText().toString());
 
             }
@@ -50,6 +52,7 @@ public class signup extends AppCompatActivity {
                     Intent goToVerification = new Intent(signup.this, Verfication.class);
                     goToVerification.putExtra("username", username);
 //                    goToVerification.putExtra("password", password);
+                    loadingDialog.dismissLoading();
                     startActivity(goToVerification);
                 },
                 error -> {
