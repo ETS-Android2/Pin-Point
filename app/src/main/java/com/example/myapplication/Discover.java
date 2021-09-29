@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.auth.AuthUser;
@@ -31,6 +35,7 @@ import com.amplifyframework.datastore.generated.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +45,12 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
     DiscoverAdapter discoverAdapter;
     RecyclerView recyclerView;
     Dashboard dashboard = new Dashboard();
-    List<User> usersList = new ArrayList<>();
+    List<User> usersList;
     DrawerLayout drawerLayout;
     BottomNavigationView bottomNavigationView;
     NavigationView navigationView;
     Toolbar toolbar;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +59,16 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
 //        RecyleView();
         allNavationBarFunctions();
         buttonNavigationfun();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Discover.this);
+        SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
+        userName = sharedPreferences.getString("userName","  ");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         gettingUsers();
+        usersList = new ArrayList<>();
         recyclerView = findViewById(R.id.discoverRecycleVeiw);
         recyclerView.setAdapter(new DiscoverAdapter(usersList, this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -74,6 +84,7 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
 //
 //    }
 
+
     Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
         @Override
         public boolean handleMessage(@NonNull Message msg) {
@@ -87,9 +98,11 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
                 ModelQuery.list(User.class),
                 response -> {
                     for (User user : response.getData()) {
-                        usersList.add(user);
-                        handler.sendEmptyMessage(1);
-                        Log.i("MyAmplifyApp", user.getFirstName());
+                        if (!userName.equals(user.getUserName())){
+                            usersList.add(user);
+                            handler.sendEmptyMessage(1);
+                            Log.i("MyAmplifyApp", user.getFirstName());
+                        }
                     }
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
@@ -126,9 +139,9 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_logout:
                 logout();
                 break;
-            case R.id.nav_discover:
-                goToDicover();
-                break;
+//            case R.id.nav_discover:
+//                goToDicover();
+//                break;
             case R.id.nav_profile:
                 goToProfile();
                 break;
@@ -139,9 +152,13 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
                 goToHome();
                 break;
             case R.id.discove_butt:
+                goToDicover();
                 break;
             case R.id.profile_butt:
                 goToProfile();
+                break;
+            case R.id.pin_butt:
+                goToPin();
                 break;
 
         }
@@ -184,6 +201,21 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
         Intent goToHome = new Intent(Discover.this, Dashboard.class);
         startActivity(goToHome);
     }
+    public void goToPin(){
+        Intent gotoDiscoverPage=new Intent(Discover.this,NewPin.class);
+        startActivity(gotoDiscoverPage);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            Intent a = new Intent(Discover.this,Dashboard.class);
+            startActivity(a);
+
+        }
+    }
 
     public void buttonNavigationfun() {
         bottomNavigationView = findViewById(R.id.butt_nav_view);
@@ -210,7 +242,26 @@ public class Discover extends AppCompatActivity implements NavigationView.OnNavi
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView UserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.use_name_name);
-        UserName.setText(com.amazonaws.mobile.client.AWSMobileClient.getInstance().getUsername());
+        ImageView userImage=(ImageView) navigationView.getHeaderView(0).findViewById(R.id.use_image);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Discover.this);
+        //FullName
+        String firstName=sharedPreferences.getString("firstName", "user");
+        String LastName=sharedPreferences.getString("LastName", "Name");
+        UserName.setText(firstName+" "+LastName);
+
+        Amplify.Storage.downloadFile(
+                sharedPreferences.getString("Img","10"),
+                new File(getApplicationContext().getFilesDir() + sharedPreferences.getString("Img","10")),
+                result -> {
+                    System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
+                    userImage.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
+                    System.out.println("jjj"+sharedPreferences.getString("Img","10"));
+                },
+                error -> Log.e("MyAmplifyApp", "Download Failure", error)
+        );
+
 
 
     }

@@ -1,12 +1,16 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amplifyframework.AmplifyException;
@@ -25,11 +29,11 @@ import java.util.Collections;
 
 public class Login extends AppCompatActivity {
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         configure();
         Button signIn = findViewById(R.id.signIn_button);
         EditText username = findViewById(R.id.username_signIn);
@@ -50,9 +54,11 @@ public class Login extends AppCompatActivity {
             startActivity(newIntent);
         });
 //        fogetpassword.setOnClickListener(view -> forgetpassword(username.getText().toString()));
+
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     void signInfunc(String userName, String password) {
         Amplify.Auth.signIn(
                 userName,
@@ -64,6 +70,10 @@ public class Login extends AppCompatActivity {
                             ModelQuery.list(User.class, User.USER_NAME.contains(userName)),
                             response -> {
                                 Log.i("TestLogin", String.valueOf(response.getData().getItems().toString().equals("[]")));
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Login.this);
+                                SharedPreferences.Editor sharedEditor = sharedPreferences.edit();
+                                sharedEditor.putString("userName", userName);
+                                sharedEditor.apply();
                                 if (response.getData().getItems().toString().equals("[]")) {
                                     Intent goToCompleteRegistration = new Intent(Login.this, CompleteRegistration.class);
                                     goToCompleteRegistration.putExtra("userName", userName);
@@ -71,8 +81,10 @@ public class Login extends AppCompatActivity {
                                 }else {
                                     Intent goToHome = new Intent(Login.this, Dashboard.class);
                                     goToHome.putExtra("userName", userName);
+                                    System.out.println("ooooo"+userName);
                                     startActivity(goToHome);
                                 }
+
                             },
                             error -> Log.e("MyAmplifyApp", "Query failure", error)
                     );

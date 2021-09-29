@@ -1,7 +1,6 @@
 package com.amplifyframework.datastore.generated.model;
 
 import com.amplifyframework.core.model.annotations.BelongsTo;
-import com.amplifyframework.core.model.annotations.HasOne;
 import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
@@ -25,7 +24,7 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class Pin implements Model {
   public static final QueryField ID = field("Pin", "id");
   public static final QueryField USER = field("Pin", "userID");
-  public static final QueryField PLACE_ID = field("Pin", "placeID");
+  public static final QueryField PLACE = field("Pin", "pinPlaceId");
   public static final QueryField BODY = field("Pin", "body");
   public static final QueryField IS_PRIVATE = field("Pin", "isPrivate");
   public static final QueryField PIN_IMG = field("Pin", "pinImg");
@@ -34,8 +33,7 @@ public final class Pin implements Model {
   public static final QueryField LOCAT_NAME = field("Pin", "locatName");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="User") @BelongsTo(targetName = "userID", type = User.class) User user;
-  private final @ModelField(targetType="ID", isRequired = true) String placeID;
-  private final @ModelField(targetType="Place") @HasOne(associatedWith = "id", type = Place.class) Place place = null;
+  private final @ModelField(targetType="Place") @BelongsTo(targetName = "pinPlaceId", type = Place.class) Place place;
   private final @ModelField(targetType="String") String body;
   private final @ModelField(targetType="Boolean") Boolean isPrivate;
   private final @ModelField(targetType="String") List<String> pinImg;
@@ -50,10 +48,6 @@ public final class Pin implements Model {
   
   public User getUser() {
       return user;
-  }
-  
-  public String getPlaceId() {
-      return placeID;
   }
   
   public Place getPlace() {
@@ -92,10 +86,10 @@ public final class Pin implements Model {
       return updatedAt;
   }
   
-  private Pin(String id, User user, String placeID, String body, Boolean isPrivate, List<String> pinImg, Double lat, Double lon, String locatName) {
+  private Pin(String id, User user, Place place, String body, Boolean isPrivate, List<String> pinImg, Double lat, Double lon, String locatName) {
     this.id = id;
     this.user = user;
-    this.placeID = placeID;
+    this.place = place;
     this.body = body;
     this.isPrivate = isPrivate;
     this.pinImg = pinImg;
@@ -114,7 +108,7 @@ public final class Pin implements Model {
       Pin pin = (Pin) obj;
       return ObjectsCompat.equals(getId(), pin.getId()) &&
               ObjectsCompat.equals(getUser(), pin.getUser()) &&
-              ObjectsCompat.equals(getPlaceId(), pin.getPlaceId()) &&
+              ObjectsCompat.equals(getPlace(), pin.getPlace()) &&
               ObjectsCompat.equals(getBody(), pin.getBody()) &&
               ObjectsCompat.equals(getIsPrivate(), pin.getIsPrivate()) &&
               ObjectsCompat.equals(getPinImg(), pin.getPinImg()) &&
@@ -131,7 +125,7 @@ public final class Pin implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getUser())
-      .append(getPlaceId())
+      .append(getPlace())
       .append(getBody())
       .append(getIsPrivate())
       .append(getPinImg())
@@ -150,7 +144,7 @@ public final class Pin implements Model {
       .append("Pin {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("user=" + String.valueOf(getUser()) + ", ")
-      .append("placeID=" + String.valueOf(getPlaceId()) + ", ")
+      .append("place=" + String.valueOf(getPlace()) + ", ")
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("isPrivate=" + String.valueOf(getIsPrivate()) + ", ")
       .append("pinImg=" + String.valueOf(getPinImg()) + ", ")
@@ -163,7 +157,7 @@ public final class Pin implements Model {
       .toString();
   }
   
-  public static PlaceIdStep builder() {
+  public static BuildStep builder() {
       return new Builder();
   }
   
@@ -202,7 +196,7 @@ public final class Pin implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       user,
-      placeID,
+      place,
       body,
       isPrivate,
       pinImg,
@@ -210,15 +204,11 @@ public final class Pin implements Model {
       lon,
       locatName);
   }
-  public interface PlaceIdStep {
-    BuildStep placeId(String placeId);
-  }
-  
-
   public interface BuildStep {
     Pin build();
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep user(User user);
+    BuildStep place(Place place);
     BuildStep body(String body);
     BuildStep isPrivate(Boolean isPrivate);
     BuildStep pinImg(List<String> pinImg);
@@ -228,10 +218,10 @@ public final class Pin implements Model {
   }
   
 
-  public static class Builder implements PlaceIdStep, BuildStep {
+  public static class Builder implements BuildStep {
     private String id;
-    private String placeID;
     private User user;
+    private Place place;
     private String body;
     private Boolean isPrivate;
     private List<String> pinImg;
@@ -245,7 +235,7 @@ public final class Pin implements Model {
         return new Pin(
           id,
           user,
-          placeID,
+          place,
           body,
           isPrivate,
           pinImg,
@@ -255,15 +245,14 @@ public final class Pin implements Model {
     }
     
     @Override
-     public BuildStep placeId(String placeId) {
-        Objects.requireNonNull(placeId);
-        this.placeID = placeId;
+     public BuildStep user(User user) {
+        this.user = user;
         return this;
     }
     
     @Override
-     public BuildStep user(User user) {
-        this.user = user;
+     public BuildStep place(Place place) {
+        this.place = place;
         return this;
     }
     
@@ -315,10 +304,10 @@ public final class Pin implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, User user, String placeId, String body, Boolean isPrivate, List<String> pinImg, Double lat, Double lon, String locatName) {
+    private CopyOfBuilder(String id, User user, Place place, String body, Boolean isPrivate, List<String> pinImg, Double lat, Double lon, String locatName) {
       super.id(id);
-      super.placeId(placeId)
-        .user(user)
+      super.user(user)
+        .place(place)
         .body(body)
         .isPrivate(isPrivate)
         .pinImg(pinImg)
@@ -328,13 +317,13 @@ public final class Pin implements Model {
     }
     
     @Override
-     public CopyOfBuilder placeId(String placeId) {
-      return (CopyOfBuilder) super.placeId(placeId);
+     public CopyOfBuilder user(User user) {
+      return (CopyOfBuilder) super.user(user);
     }
     
     @Override
-     public CopyOfBuilder user(User user) {
-      return (CopyOfBuilder) super.user(user);
+     public CopyOfBuilder place(Place place) {
+      return (CopyOfBuilder) super.place(place);
     }
     
     @Override

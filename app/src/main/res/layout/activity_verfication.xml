@@ -15,22 +15,24 @@
         android:layout_height="150dp"
         android:transitionName="logo_image"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/finallogo" />
+        app:srcCompat="@drawable/final_logo2" />
 
     <TextView
+        android:textColor="#E6000000"
         android:id="@+id/logo_name_vervidication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Verfication"
-        android:textSize="40sp"
-        android:transitionName="logo_text"
-        android:fontFamily="@font/anton"/>
+        android:textSize="25sp"
+        android:fontFamily="@font/francois_one"
+        android:transitionName="logo_text" />
     <TextView
         android:id="@+id/slogan_name_ver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enter verification code here"
-        android:textSize="15dp"
+        android:textSize="14dp"
+        android:textColor="#E6000000"
         android:fontFamily="@font/anton"
         />
     <LinearLayout
@@ -46,6 +48,7 @@
             android:id="@+id/verficationcode"
             android:hint="Verfication Code"
             app:passwordToggleEnabled="true"
+            android:fontFamily="@font/francois_one"
             app:startIconDrawable="@drawable/ic_baseline_pending_24"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
@@ -64,8 +67,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Confirm"
-            app:backgroundTint="#ff021f"
+            app:backgroundTint="#c10001"
             android:padding="15dp"
+            android:fontFamily="@font/francois_one"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"/>
 

@@ -16,8 +16,7 @@ type Pin @model
     id: ID!
     userID: ID!
     user:User @connection(fields: ["userID"])
-    placeID: ID!
-    place: Place @connection(fields: ["placeID"])
+    place: Place @connection
     body: String
     isPrivate:Boolean
     pinImg: [String]
